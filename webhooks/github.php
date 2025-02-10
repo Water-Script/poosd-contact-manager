@@ -24,13 +24,14 @@ function processRequest() {
         echo generateError("405 (Method Not Allowed)", "InvalidRequestMethod", "Only POST request will be processed by this endpoint.");
         return;
     }
-  
-    $agent = explode($headers["user-agent"], "/");
 
-    if ($agent[1] != "github-hookshot") {
-        http_response_code(400);
-        return;
-    }
+
+    //$agent = explode($headers["user-agent"], "/");
+
+    //if ($agent[1] != "github-hookshot") {
+     //   http_response_code(400);
+    //    return;
+    //}
 
     if (!array_key_exists("x-github-event", $headers) || is_null($headers["x-github-event"])
         || !array_key_exists("x-hub-signature-256", $headers) || is_null($headers["x-hub-signature-256"])
@@ -46,8 +47,11 @@ function processRequest() {
     if (!in_array($event, $acceptedEvents)) {
         http_response_code(400);
         echo generateError("400 (Bad Request)", "InvalidEvent", "The request has an event header that this endpoint ignores ({$event}).");
+        echo $headers["x-github-event"];
         return;
     }
+
+    //echo "Checking hash (with getenv)...\n";
 
     $webhookSecret = getenv("GITHUB_WEBHOOK_SECRET");
 
@@ -57,13 +61,19 @@ function processRequest() {
         return;
     }
 
-    $hash = "sha256=" . hash_hmac("sha256", json_encode($dataText), $webhookSecret);
+    $hash = "sha256=" . hash_hmac("sha256", $dataText, $webhookSecret);
 
     if (!hash_equals($hash, $signature)) {
         http_response_code(401);
         echo generateError("400 (Bad Request)", "InvalidSignature", "The request has an invalid or malformed signature.");
+        //echo "\n";
+        //echo json_encode(["hash" => "$hash", "signature" => "$signature"]);
+        //echo "\nData dump:\n";
+        //echo $dataText;
         return;
     }
+
+    //shell_exec("");
 
     http_response_code(200);
 }
