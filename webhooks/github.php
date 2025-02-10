@@ -73,8 +73,8 @@ function processRequest() {
         return;
     }
 
-    //shell_exec("");
-
+    // We might have to cd up a level...
+    shell_exec("git pull");
     http_response_code(200);
 }
 
