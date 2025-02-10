@@ -74,7 +74,8 @@ function processRequest() {
     }
 
     // We might have to cd up a level...
-    shell_exec("git pull origin main");
+    // shell_exec("git pull origin main");
+    shell_exec("git reset --hard HEAD && git pull");
     http_response_code(200);
 }
 
