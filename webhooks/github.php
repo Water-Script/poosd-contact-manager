@@ -73,7 +73,7 @@ function processRequest() {
         return;
     }
 
-    echo shell_exec("sudo git pull origin main 2>&1");
+    echo shell_exec("cd /opt/bitnami/apache/htdocs && sudo -u bitnami git pull origin main 2>&1");
     http_response_code(200);
 }
 
