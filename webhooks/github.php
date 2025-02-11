@@ -40,22 +40,6 @@ function processRequest() {
         return;
     }
 
-    if (!array_key_exists("ref") || is_null($headers["ref"])) {
-        http_response_code(400);
-        echo generateError(
-            "400 (Bad Request)",
-            "InvalidRefHeader",
-            "The request does not contain a proper ref field."
-        );
-        return;
-    } elseif ($headers["ref"] !== "refs/heads/main") {
-        http_response_code(202);
-        echo json_encode(array(
-            "response" => "Request accepted, but processing refused due to branch of commit in ref field."
-        ));
-        return;
-    }
-
     if (!array_key_exists("x-github-event", $headers) || is_null($headers["x-github-event"])
         || !array_key_exists("x-hub-signature-256", $headers)
         || is_null($headers["x-hub-signature-256"])
@@ -82,8 +66,6 @@ function processRequest() {
         return;
     }
 
-    //echo "Checking hash (with getenv)...\n";
-
     $webhookSecret = getenv("GITHUB_WEBHOOK_SECRET");
 
     if (!$webhookSecret) {
@@ -108,9 +90,24 @@ function processRequest() {
         return;
     }
 
+    if (!array_key_exists("ref", $data) || is_null($data["ref"])) {
+        http_response_code(400);
+        echo generateError(
+            "400 (Bad Request)",
+            "InvalidRefHeader",
+            "The request does not contain a proper ref field."
+        );
+        return;
+    } elseif ($data["ref"] !== "refs/heads/main") {
+        http_response_code(202);
+        echo json_encode(array(
+            "response" => "Request accepted, but processing refused due to branch of commit in ref field."
+        ));
+        return;
+    }
+
     echo shell_exec("cd /opt/bitnami/apache/htdocs && sudo -u bitnami git pull origin main 2>&1");
     http_response_code(200);
-    // echo json_encode(array("response" => "Request accepted and processed successfully."));
 }
 
 processRequest()
