@@ -45,7 +45,7 @@ function processRequest() {
         echo generateError(
             "400 (Bad Request)",
             "InvalidRefHeader",
-            "The request does not contain a proper 'ref' header."
+            "The request does not contain a proper ref field."
         );
         return;
     } elseif ($headers["ref"] !== "refs/heads/main") {
@@ -79,7 +79,6 @@ function processRequest() {
             "InvalidEvent",
             "The request has an event header that this endpoint ignores ({$event})."
         );
-        echo $headers["x-github-event"];
         return;
     }
 
@@ -111,7 +110,7 @@ function processRequest() {
 
     echo shell_exec("cd /opt/bitnami/apache/htdocs && sudo -u bitnami git pull origin main 2>&1");
     http_response_code(200);
-    echo json_encode(array("response" => "Request accepted and processed successfully."));
+    // echo json_encode(array("response" => "Request accepted and processed successfully."));
 }
 
 processRequest()
