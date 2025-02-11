@@ -20,8 +20,8 @@ function processRequest() {
     $headers = array_change_key_case(apache_request_headers());
 
     if ($_SERVER["REQUEST_METHOD"] != "POST") {
-        http_response_code(405);
         header("Content-Type: application/json; charset=UTF-8");
+        http_response_code(405);
         echo generateError(
             "405 (Method Not Allowed)",
             "InvalidRequestMethod",
@@ -30,10 +30,9 @@ function processRequest() {
         return;
     }
 
-
     if (!array_key_exists("user-agent", $headers) || is_null($headers["user-agent"])) {
-        http_response_code(400);
         header("Content-Type: application/json; charset=UTF-8");
+        http_response_code(400);
         echo generateError(
             "400 (Bad Request)",
             "MissingAgentHeader",
@@ -45,8 +44,8 @@ function processRequest() {
     $agentPieces = explode("/", $headers["user-agent"]);
 
     if ($agentPieces[0] && strtolower($agentPieces[0]) !== "github-hookshot") {
-        http_response_code(400);
         header("Content-Type: application/json; charset=UTF-8");
+        http_response_code(400);
         echo generateError(
             "400 (Bad Request)",
             "InvalidAgentHeader",
@@ -59,8 +58,8 @@ function processRequest() {
         || !array_key_exists("x-hub-signature-256", $headers)
         || is_null($headers["x-hub-signature-256"])
     ) {
-        http_response_code(400);
         header("Content-Type: application/json; charset=UTF-8");
+        http_response_code(400);
         echo generateError(
             "400 (Bad Request)",
             "MissingSignatureHeader",
@@ -73,8 +72,8 @@ function processRequest() {
     $signature = $headers["x-hub-signature-256"];
 
     if (!in_array($event, $acceptedEvents)) {
-        http_response_code(400);
         header("Content-Type: application/json; charset=UTF-8");
+        http_response_code(400);
         echo generateError(
             "400 (Bad Request)",
             "InvalidEvent",
@@ -86,8 +85,8 @@ function processRequest() {
     $webhookSecret = getenv("GITHUB_WEBHOOK_SECRET");
 
     if (!$webhookSecret) {
-        http_response_code(500);
         header("Content-Type: application/json; charset=UTF-8");
+        http_response_code(500);
         echo generateError(
             "500 (Internal Server Error)",
             "TokenRetrievalError",
@@ -99,8 +98,8 @@ function processRequest() {
     $hash = "sha256=" . hash_hmac("sha256", $dataText, $webhookSecret);
 
     if (!hash_equals($hash, $signature)) {
-        http_response_code(400);
         header("Content-Type: application/json; charset=UTF-8");
+        http_response_code(400);
         echo generateError(
             "400 (Bad Request)",
             "InvalidSignature",
@@ -110,8 +109,8 @@ function processRequest() {
     }
 
     if (!array_key_exists("ref", $data) || is_null($data["ref"])) {
-        http_response_code(400);
         header("Content-Type: application/json; charset=UTF-8");
+        http_response_code(400);
         echo generateError(
             "400 (Bad Request)",
             "InvalidRefField",
@@ -119,8 +118,8 @@ function processRequest() {
         );
         return;
     } elseif ($data["ref"] !== "refs/heads/main") {
-        http_response_code(202);
         header("Content-Type: application/json; charset=UTF-8");
+        http_response_code(202);
         echo json_encode(array(
             "response" => "Request accepted, but processing refused due to branch of commit in ref field."
         ));
