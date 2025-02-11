@@ -30,7 +30,19 @@ function processRequest() {
     }
 
 
-    if ($agent[1] !== "github-hookshot") {
+    if (!array_key_exists("user-agent", $headers) || is_null($headers["user-agent"])) {
+        http_response_code(400);
+        echo generateError(
+            "400 (Bad Request)",
+            "MissingAgentHeader",
+            "The request is missing an expected user-agent header."
+        );
+        return;
+    }
+
+    $agentPieces = explode("/", $headers["user-agent"]);
+
+    if ($agent[0] && strtolower($agent[0]) !== "github-hookshot") {
         http_response_code(400);
         echo generateError(
             "400 (Bad Request)",
@@ -47,7 +59,7 @@ function processRequest() {
         http_response_code(400);
         echo generateError(
             "400 (Bad Request)",
-            "MissingHeader",
+            "MissingSignatureHeader",
             "The request is missing HTTP headers that are expected."
         );
         return;
@@ -94,7 +106,7 @@ function processRequest() {
         http_response_code(400);
         echo generateError(
             "400 (Bad Request)",
-            "InvalidRefHeader",
+            "InvalidRefField",
             "The request does not contain a proper ref field."
         );
         return;
@@ -106,6 +118,7 @@ function processRequest() {
         return;
     }
 
+    header("Content-Type: text/html; charset=UTF-8");
     echo shell_exec("cd /opt/bitnami/apache/htdocs && sudo -u bitnami git pull origin main 2>&1");
     http_response_code(200);
 }
