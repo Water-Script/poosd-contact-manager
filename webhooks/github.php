@@ -21,7 +21,11 @@ function processRequest() {
 
     if ($_SERVER["REQUEST_METHOD"] != "POST") {
         http_response_code(405);
-        echo generateError("405 (Method Not Allowed)", "InvalidRequestMethod", "Only POST request will be processed by this endpoint.");
+        echo generateError(
+            "405 (Method Not Allowed)",
+            "InvalidRequestMethod",
+            "Only POST request will be processed by this endpoint."
+        );
         return;
     }
 
@@ -34,10 +38,15 @@ function processRequest() {
     //}
 
     if (!array_key_exists("x-github-event", $headers) || is_null($headers["x-github-event"])
-        || !array_key_exists("x-hub-signature-256", $headers) || is_null($headers["x-hub-signature-256"])
+        || !array_key_exists("x-hub-signature-256", $headers)
+        || is_null($headers["x-hub-signature-256"])
     ) {
         http_response_code(400);
-        echo generateError("400 (Bad Request)", "MissingHeader", "The request is missing HTTP headers that are expected.");
+        echo generateError(
+            "400 (Bad Request)",
+            "MissingHeader",
+            "The request is missing HTTP headers that are expected."
+        );
         return;
     }
 
@@ -46,7 +55,11 @@ function processRequest() {
 
     if (!in_array($event, $acceptedEvents)) {
         http_response_code(400);
-        echo generateError("400 (Bad Request)", "InvalidEvent", "The request has an event header that this endpoint ignores ({$event}).");
+        echo generateError(
+            "400 (Bad Request)",
+            "InvalidEvent",
+            "The request has an event header that this endpoint ignores ({$event})."
+        );
         echo $headers["x-github-event"];
         return;
     }
@@ -57,7 +70,11 @@ function processRequest() {
 
     if (!$webhookSecret) {
         http_response_code(500);
-        echo generateError("500 (Internal Server Error)", "TokenRetrievalError", "Server failed to retrieve the encryption token.");
+        echo generateError(
+            "500 (Internal Server Error)",
+            "TokenRetrievalError",
+            "Server failed to retrieve the encryption token."
+        );
         return;
     }
 
@@ -65,11 +82,11 @@ function processRequest() {
 
     if (!hash_equals($hash, $signature)) {
         http_response_code(401);
-        echo generateError("400 (Bad Request)", "InvalidSignature", "The request has an invalid or malformed signature.");
-        //echo "\n";
-        //echo json_encode(["hash" => "$hash", "signature" => "$signature"]);
-        //echo "\nData dump:\n";
-        //echo $dataText;
+        echo generateError(
+            "400 (Bad Request)",
+            "InvalidSignature",
+            "The request has an invalid or malformed signature."
+        );
         return;
     }
 
