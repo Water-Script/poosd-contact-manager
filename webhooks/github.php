@@ -32,6 +32,7 @@ function processRequest() {
 
     if (!array_key_exists("user-agent", $headers) || is_null($headers["user-agent"])) {
         http_response_code(400);
+        header("Content-Type: application/json; charset=UTF-8")
         echo generateError(
             "400 (Bad Request)",
             "MissingAgentHeader",
@@ -42,7 +43,7 @@ function processRequest() {
 
     $agentPieces = explode("/", $headers["user-agent"]);
 
-    if ($agent[0] && strtolower($agent[0]) !== "github-hookshot") {
+    if ($agentPieces[0] && strtolower($agentPieces[0]) !== "github-hookshot") {
         http_response_code(400);
         echo generateError(
             "400 (Bad Request)",
