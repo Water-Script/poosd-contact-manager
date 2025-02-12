@@ -1,5 +1,38 @@
 body
 {
-    /* Test color, not final - Jairyn */ 
-background-color: #a3a3a3;
+     
+background-color: #7d9793;
 }
+
+#title
+{
+font-size: 60px;
+margin: 5% 5%;
+text-align: center;
+border: 5px #000;
+color: #000000;
+}
+/* This contains the boxes where users insert log in info */
+#loginDiv
+{
+    width: 30%;
+    margin-left: 20%;
+    padding: 15%;
+    background-color: #4e685c;
+    border-radius: 20px;
+
+}
+
+.buttons
+{
+ font-size: 50px;
+ border-radius: 20px;
+}
+
+.buttons:hover
+{
+background-color: #FFFFFF;
+color: #FFFFFF;
+opacity: 20%;
+}
+
