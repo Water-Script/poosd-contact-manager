@@ -16,16 +16,21 @@ color: #000000;
 #loginDiv
 {
     width: 30%;
+    height: 50px;
     margin-left: 20%;
     padding: 15%;
-    background-color: #4e685c;
+    background-color: #3e7059;
     border-radius: 20px;
 
+}
+#credentials
+{
+    font-size: 30px;
 }
 
 .buttons
 {
- font-size: 50px;
+ font-size: 20px;
  border-radius: 20px;
 }
 
@@ -35,4 +40,14 @@ background-color: #FFFFFF;
 color: #FFFFFF;
 opacity: 20%;
 }
+
+input[type="text"], input[type="password"]{
+    border-radius: 30px;
+    text-align: center;
+    /*location*/
+    margin-left: 20%;
+    margin-bottom: 2%;
+    width: 100%;
+}
+
 
