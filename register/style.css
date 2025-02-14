@@ -23,7 +23,11 @@ color: #000000;
     border-radius: 20px;
 
 }
-#credentials
+#loginName
+{
+    font-size: 30px;
+}
+#loginPass
 {
     font-size: 30px;
 }
@@ -36,7 +40,7 @@ color: #000000;
 
 .buttons:hover
 {
-background-color: #FFFFFF;
+background-color: #395f48;
 color: #FFFFFF;
 opacity: 20%;
 }
