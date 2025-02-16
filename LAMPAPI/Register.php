@@ -12,7 +12,8 @@
     $newUsername = $indata['username'];
     $newPassword = $indata['password']; 
 
-    if (empty($newUsername) || empty($newPassword)) {
+    if ($newUsername == null || $newUsername == "" ||
+        $newPassword == null || $newPassword == "") {
         returnWithError("All fields must be filled.");
     } // Validate fields
     else {
