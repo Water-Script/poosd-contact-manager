@@ -27,7 +27,7 @@
             $result = $getRegisterUser->get_result();
 
             if ($row = $result->fetch_assoc()) {
-                returnWithInfo($row['Username'], $row['ID']);
+                returnWithInfo($newUsername, $row['ID']);
             }   
             else {
                 returnWithError("You should never see this");
@@ -49,7 +49,7 @@
     }
 
     function returnWithError ($err) {
-        $retValue = '{"userId":0,"username":"","error":"' . $err . '"}';
+        $retValue = '{"userId":"","username":"","error":"' . $err . '"}';
         http_response_code(400);
         sendResultInfoAsJson($retValue);
     }
