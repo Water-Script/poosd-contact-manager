@@ -9,11 +9,10 @@
 
     // check account exists
 
-    $newUsername = $indata['username'];
-    $newPassword = $indata['password']; 
+    $newUsername = $inData['username'];
+    $newPassword = $inData['password']; 
 
-    if ($newUsername == null || $newUsername == "" ||
-        $newPassword == null || $newPassword == "") {
+    if (empty($newUsername) || empty($newPassword)) {
         returnWithError("All fields must be filled.");
     } // Validate fields
     else {
