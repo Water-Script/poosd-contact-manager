@@ -3,41 +3,43 @@
     require 'DBConnection.php';
     $inData = getRequestInfo();
 
-    $id = 0;
-    $username = "";
-    $password = ""; // this will be used for checking if an account exists
+    $username = $inData['username'];
+    $password = $inData['password']; 
 
-    // check account exists
-
-    $newUsername = $inData['username'];
-    $newPassword = $inData['password']; 
-
-    if (empty($newUsername) || empty($newPassword)) {
-        returnWithError("All fields must be filled.");
-    } // Validate fields
+    $checkUser = $conn->prepare("SELECT ID FROM Users WHERE Username=?");
+    $checkUser->bind_param("s", $username);
+    $checkUser->execute();
+    if ($row = $result->fetch_assoc()) {
+        returnWithError("A user already exists with this username.");
+    }
     else {
-        $newHashedPassword = password_hash($newPassword, PASSWORD_BCRYPT); // hashing for security
-        $registerUser = $conn->prepare("INSERT INTO Users (Username,Password) VALUES (?,?)");
-        $registerUser->bind_param("ss", $newUsername, $newHashedPassword);
+        if (empty($username) || empty($password)) {
+            returnWithError("All fields must be filled.");
+        } // Validate fields
+        else {
+            $hashedPassword = password_hash($password, PASSWORD_BCRYPT); // hashing for security
+            $registerUser = $conn->prepare("INSERT INTO Users (Username,Password) VALUES (?,?)");
+            $registerUser->bind_param("ss", $username, $hashedPassword);
 
-        if ($registerUser->execute()) {
-            $getRegisterUser = $conn->prepare("SELECT ID FROM Users WHERE Username=?");
-            $getRegisterUser->bind_param("s", $newUsername);
-            $getRegisterUser->execute();
-            $result = $getRegisterUser->get_result();
+            if ($registerUser->execute()) {
+                $getRegisterUser = $conn->prepare("SELECT ID FROM Users WHERE Username=?");
+                $getRegisterUser->bind_param("s", $username);
+                $getRegisterUser->execute();
+                $result = $getRegisterUser->get_result();
 
-            if ($row = $result->fetch_assoc()) {
-                returnWithInfo($newUsername, $row['ID']);
-            }   
-            else {
-                returnWithError("You should never see this");
+                if ($row = $result->fetch_assoc()) {
+                    returnWithInfo($username, $row['ID']);
+                }   
+                else {
+                    returnWithError("You should never see this");
+                }
             }
-        }
 
-        $registerUser->close();
-        $getRegisterUser->close();
-        $conn->close();
-    } // create user
+            $registerUser->close();
+            $getRegisterUser->close();
+            $conn->close();
+        } // create user
+    }
 
     function getRequestInfo() {
         return json_decode(file_get_contents('php://input'), true);
