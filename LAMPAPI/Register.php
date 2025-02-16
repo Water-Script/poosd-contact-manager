@@ -27,7 +27,7 @@
             $result = $getRegisterUser->get_result();
 
             if ($row = $result->fetch_assoc()) {
-                returnWithInfo($row['username'], $row['password'], $row['ID']);
+                returnWithInfo($row['Username'], $row['ID']);
             }   
             else {
                 returnWithError("You should never see this");
