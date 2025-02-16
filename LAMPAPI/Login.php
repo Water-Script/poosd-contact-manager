@@ -21,7 +21,7 @@ if (!$conn) {
     if ($row = $result->fetch_assoc()) {
         // Compare the password directly 
         if ($inData["Password"] === $row['Password']) {
-        returnWithInfo($row['firstName'], $row['lastName'], $row['ID']);
+        returnWithInfo($row['Username'], $row['Password'], $row['ID']);
     
         } else {
             returnWithError("Incorrect Password");
