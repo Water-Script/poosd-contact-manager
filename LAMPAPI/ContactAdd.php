@@ -1,10 +1,9 @@
 <?php
-require 'DBConnection.php';
+    require 'DBConnection.php';
 
-$inData = getRequestInfo();
+    $inData = getRequestInfo();
 
-function getRequestInfo() {
-    return json_decode(file_get_contents('php://input'), true);
-}
-
+    function getRequestInfo() {
+        return json_decode(file_get_contents('php://input'), true);
+    }
 ?>

@@ -1,13 +1,12 @@
 <?php
-$servername = "localhost";
-$username = "Robot";
-$password = "very_secret_and_secure";
-$database = "PROJECT";
+    $servername = "localhost";
+    $username = "Robot";
+    $password = "very_secret_and_secure";
+    $database = "PROJECT";
 
-$conn = new mysqli($servername, $username, $password, $database);
+    $conn = new mysqli($servername, $username, $password, $database);
 
-if ($conn->connect_error) {
-    returnWithError($conn->connect_error);
-}
-
+    if ($conn->connect_error) {
+        returnWithError($conn->connect_error);
+    } 
 ?>
