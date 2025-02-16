@@ -16,21 +16,26 @@
         returnWithError("All fields must be filled.");
     } // Validate fields
     else {
-        $newHashedPassword = password_hash($indata['password'], PASSWORD_BCRYPT); // hashing for security
+        $newHashedPassword = password_hash($newPassword, PASSWORD_BCRYPT); // hashing for security
         $registerUser = $conn->prepare("INSERT INTO Users (Username,Password) VALUES (?,?)");
         $registerUser->bind_param("ss", $newUsername, $newHashedPassword);
-        $registerUser->execute();
-        $result = $registerUser->get_result();
 
-        if ($row = $result->fetch_assoc())
-        {
-            returnWithInfo($row['username'], $row['password'], $row['ID']);
-        }
-        else {
-            returnWithError("You should never see this");
+        if ($registerUser->execute()) {
+            $getRegisterUser = $conn->prepare("SELECT ID FROM Users WHERE Username=?");
+            $getRegisterUser->bind_param("s", $newUsername);
+            $getRegisterUser->execute();
+            $result = $getRegisterUser->get_result();
+
+            if ($row = $result->fetch_assoc()) {
+                returnWithInfo($row['username'], $row['password'], $row['ID']);
+            }   
+            else {
+                returnWithError("You should never see this");
+            }
         }
 
         $registerUser->close();
+        $getRegisterUser->close();
         $conn->close();
     } // create user
 
