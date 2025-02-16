@@ -7,8 +7,7 @@ ini_set("log_errors", 1);
 require "DBConnection.php";
 
 $inData = getRequestInfo();
-var_dump($inData);
-exit();
+
 
 
 // Check if connection is available
