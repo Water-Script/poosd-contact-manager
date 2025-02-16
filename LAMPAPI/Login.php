@@ -13,15 +13,15 @@ if (!$conn) {
     returnWithError("Database connection error.");
 } else {
     // Prepare SQL statement to find user by login
-    $stmt = $conn->prepare("SELECT ID, firstName, lastName, password FROM Users WHERE login=?");
-    $stmt->bind_param("s", $inData["login"]); // Bind the login value as a string
+    $stmt = $conn->prepare("SELECT ID, Password FROM Users WHERE Username=?");
+    $stmt->bind_param("s", $inData["Username"]); // Bind the login value as a string
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($row = $result->fetch_assoc()) {
         // Compare the password directly (WARNING: Not secure)
-        if ($inData["password"] === $row['password']) {
-            returnWithInfo($row['firstName'], $row['lastName'], $row['ID']);
+        if ($inData["Password"] === $row['Password']) {
+            returnWithInfo($row['ID']);
         } else {
             returnWithError("Incorrect Password");
         }
@@ -47,13 +47,13 @@ function sendResultInfoAsJson($obj, $statusCode = 200) {
 
 // Helper function to return an error message
 function returnWithError($err) {
-    $retValue = json_encode(["id" => 0, "firstName" => "", "lastName" => "", "error" => $err]);
+    $retValue = json_encode(["id" => 0, "Username" => "", "Password" => "", "error" => $err]);
     sendResultInfoAsJson($retValue, 400);
 }
 
 // Helper function to return success response
-function returnWithInfo($firstName, $lastName, $id) {
-    $retValue = json_encode(["id" => $id, "firstName" => $firstName, "lastName" => $lastName, "error" => ""]);
+function returnWithInfo($Username, $Password, $id) {
+    $retValue = json_encode(["id" => $id, "Username" => $Username, "Password" => $Password, "error" => ""]);
     sendResultInfoAsJson($retValue);
 }
 ?>
