@@ -1,14 +1,14 @@
 <?php
 
-    error_reporting(-1); 
-    ini_set("display_errors", "1"); 
+    error_reporting(-1);
+    ini_set("display_errors", "1");
     ini_set("log_errors", 1); // Report errors in console if it occurs
 
-    require 'DBConnection.php'; 
+    require "DBConnection.php";
     $inData = getRequestInfo();
 
-    $username = $inData['username'];
-    $password = $inData['password']; 
+    $username = $inData["username"];
+    $password = $inData["password"];
 
     $checkUser = $conn->prepare("SELECT ID FROM Users WHERE Username=?");
     $checkUser->bind_param("s", $username);
@@ -33,8 +33,8 @@
                 $result = $getRegisterUser->get_result(); // create user
 
                 if ($row = $result->fetch_assoc()) {
-                    returnWithInfo($username, $row['ID']);
-                }   
+                    returnWithInfo($username, $row["ID"]);
+                }
                 else {
                     returnWithError("You should never see this");
                 }
@@ -47,7 +47,7 @@
     }
 
     function getRequestInfo() {
-        return json_decode(file_get_contents('php://input'), true);
+        return json_decode(file_get_contents("php://input"), true);
     }
 
     function returnWithError ($err) {
