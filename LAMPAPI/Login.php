@@ -7,6 +7,8 @@ ini_set("log_errors", 1);
 require "DBConnection.php";
 
 $inData = getRequestInfo();
+var_dump($inData);
+exit();
 
 
 
