@@ -7,8 +7,7 @@ ini_set("log_errors", 1);
 require "DBConnection.php";
 
 $inData = getRequestInfo();
-var_dump($inData);
-exit();
+
 
 
 
@@ -17,8 +16,8 @@ if (!$conn) {
     returnWithError("Database connection error.");
 } else {
     // Prepare SQL statement to find user by login
-    $stmt = $conn->prepare("SELECT ID, Password FROM Users WHERE Username=?");
-    $stmt->bind_param("s", $inData["Username"]); // Bind the login value as a string
+    $stmt = $conn->prepare("SELECT ID,Username, Password FROM Users WHERE Username=?");
+    $stmt->bind_param("s", $inData["Username"]); // Bind the username value as a string
     $stmt->execute();
     $result = $stmt->get_result();
 
