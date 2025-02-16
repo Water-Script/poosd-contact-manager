@@ -36,12 +36,7 @@ if ($registerUser->execute()) {
     if ($row = $result->fetch_assoc()) {
         returnWithInfo($username, $row["ID"]);
     } else {
-        header("Content-type: application/json; charset=utf-8");
-        http_response_code(400);
-        echo json_encode(array(
-            "error" => "InternalServerError",
-            "message" => "The server has encountered an internal error during the processing of the request."
-        ));
+        returnWithError("InternalServerError", "The server has encountered an internal error during the processing of the request.");
     }
 }
 
