@@ -23,9 +23,8 @@
             returnWithError("All fields must be filled.");
         } // Validate fields not being empty
         else {
-            $hashedPassword = password_hash($password, PASSWORD_BCRYPT); // hashing for security
             $registerUser = $conn->prepare("INSERT INTO Users (Username,Password) VALUES (?,?)");
-            $registerUser->bind_param("ss", $username, $hashedPassword);
+            $registerUser->bind_param("ss", $username, $password);
 
             if ($registerUser->execute()) {
                 $getRegisterUser = $conn->prepare("SELECT ID FROM Users WHERE Username=?");
