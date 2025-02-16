@@ -1,10 +1,10 @@
 <?php
 
-    error_reporting(-1); // reports all errors
-    ini_set("display_errors", "1"); // shows all errors
-    ini_set("log_errors", 1); 	
+    error_reporting(-1); 
+    ini_set("display_errors", "1"); 
+    ini_set("log_errors", 1); // Report errors in console if it occurs
 
-    require 'DBConnection.php';
+    require 'DBConnection.php'; 
     $inData = getRequestInfo();
 
     $username = $inData['username'];
@@ -13,7 +13,7 @@
     $checkUser = $conn->prepare("SELECT ID FROM Users WHERE Username=?");
     $checkUser->bind_param("s", $username);
     $checkUser->execute();
-    $result = $checkUser->get_result();
+    $result = $checkUser->get_result(); // Check if a user exists
 
     if ($row = $result->fetch_assoc()) {
         returnWithError("A user already exists with this username.");
@@ -21,7 +21,7 @@
     else {
         if (empty($username) || empty($password)) {
             returnWithError("All fields must be filled.");
-        } // Validate fields
+        } // Validate fields not being empty
         else {
             $hashedPassword = password_hash($password, PASSWORD_BCRYPT); // hashing for security
             $registerUser = $conn->prepare("INSERT INTO Users (Username,Password) VALUES (?,?)");
@@ -31,7 +31,7 @@
                 $getRegisterUser = $conn->prepare("SELECT ID FROM Users WHERE Username=?");
                 $getRegisterUser->bind_param("s", $username);
                 $getRegisterUser->execute();
-                $result = $getRegisterUser->get_result();
+                $result = $getRegisterUser->get_result(); // create user
 
                 if ($row = $result->fetch_assoc()) {
                     returnWithInfo($username, $row['ID']);
@@ -51,21 +51,23 @@
         return json_decode(file_get_contents('php://input'), true);
     }
 
-    function sendResultInfoAsJson($obj) {
-    	header('Content-type: application/json');
-    	echo $obj;
-    }
-
     function returnWithError ($err) {
-        $retValue = '{"userId":"","username":"","error":"' . $err . '"}';
+        $returnArray = array(
+            "error" => $err
+        );
+        header("Content-type: application/json; charset=utf-8");
         http_response_code(400);
-        sendResultInfoAsJson($retValue);
+        echo json_encode($returnArray);
     }
 
     function returnWithInfo ($username, $id) {
-        $retValue = '{"userId":' . $id . ',"username":"' . $username . '","error":""}';
+        $returnArray = array(
+            "userId" => $id,
+            "username" => $username
+        );
+        header("Content-type: application/json; charset=utf-8");
         http_response_code(201);
-        sendResultInfoAsJson($retValue);
+        echo json_encode($returnArray);
     }
 
 ?>
