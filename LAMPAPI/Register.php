@@ -13,6 +13,8 @@
     $checkUser = $conn->prepare("SELECT ID FROM Users WHERE Username=?");
     $checkUser->bind_param("s", $username);
     $checkUser->execute();
+    $result = checkUser->get_result();
+
     if ($row = $result->fetch_assoc()) {
         returnWithError("A user already exists with this username.");
     }
