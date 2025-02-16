@@ -44,13 +44,13 @@
     }
 
     function returnWithError ($err) {
-        $retValue = '{"id":0,"username":"","error":"' . $err . '"}';
+        $retValue = '{"userId":0,"username":"","error":"' . $err . '"}';
         http_response_code(400);
         sendResultInfoAsJson($retValue);
     }
 
     function returnWithInfo ($username, $id) {
-        $retValue = '{"id":' . $id . ',"username":"' . $username . '","error":""}';
+        $retValue = '{"userId":' . $id . ',"username":"' . $username . '","error":""}';
         http_response_code(201);
         sendResultInfoAsJson($retValue);
     }
