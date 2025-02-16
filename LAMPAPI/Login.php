@@ -19,9 +19,10 @@ if (!$conn) {
     $result = $stmt->get_result();
 
     if ($row = $result->fetch_assoc()) {
-        // Compare the password directly (WARNING: Not secure)
+        // Compare the password directly 
         if ($inData["Password"] === $row['Password']) {
-            returnWithInfo($row['ID']);
+        returnWithInfo($row['firstName'], $row['lastName'], $row['ID']);
+    
         } else {
             returnWithError("Incorrect Password");
         }
