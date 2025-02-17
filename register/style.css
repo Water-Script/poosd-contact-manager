@@ -1,30 +1,26 @@
-body
-{
-     
-background-color: #7d9793;
+body {
+
+    background-color: #7d9793;
 }
 
-#title
-{
-font-size: 60px;
-margin: 5% 5%;
-text-align: center;
-border: 5px #000;
-color: #000000;
+#title {
+    font-size: 60px;
+    margin: 5% 5%;
+    text-align: center;
+    border: 5px #000;
+    color: #000000;
 }
-/* This contains the boxes where users insert log in info */
-#loginDiv
-{
+
+#loginDiv {
     width: 30%;
-    height: 50px;
     margin-left: 20%;
-    padding: 20px;
+    padding: 50px;
     background-color: #3e7059;
     border-radius: 20px;
 
 }
-#regDiv
-{
+
+#regDiv {
     width: 30%;
     height: 200px;
     margin-left: 20%;
@@ -33,20 +29,19 @@ color: #000000;
     border-radius: 20px;
 }
 
-.buttons
-{
- font-size: 20px;
- border-radius: 20px;
+.buttons {
+    font-size: 20px;
+    border-radius: 20px;
 }
 
-.buttons:hover
-{
-background-color: #395f48;
-color: #FFFFFF;
-opacity: 20%;
+.buttons:hover {
+    background-color: #395f48;
+    color: #FFFFFF;
+    opacity: 20%;
 }
 
-input[type="text"], input[type="password"]{
+input[type="text"],
+input[type="password"] {
     border-radius: 30px;
     text-align: center;
     /*location*/
@@ -54,22 +49,19 @@ input[type="text"], input[type="password"]{
     margin-bottom: 2%;
     width: 100%;
 }
-#loginName
-{
-    font-size: 30px;
-}
-#registerPass
-{
-    font-size: 30px;
-}
-#registerName
-{
-    font-size: 30px;
-}
-#loginPass
-{
+
+#loginName {
     font-size: 30px;
 }
 
+#registerPass {
+    font-size: 30px;
+}
 
+#registerName {
+    font-size: 30px;
+}
 
+#loginPass {
+    font-size: 30px;
+}
