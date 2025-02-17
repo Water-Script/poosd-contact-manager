@@ -7,7 +7,6 @@ $database = "PROJECT";
 $conn = new mysqli($servername, $username, $password, $database);
 
 if ($conn->connect_error) {
-    returnWithError($conn->connect_error);
+    returnWithError("DatabaseConnectionError",$conn->connect_error);
 }
-
 ?>
