@@ -48,7 +48,7 @@ function returnWithInfo($username, $id) {
         "username" => $username
     );
     header("Content-type: application/json; charset=utf-8");
-    http_response_code(201);
+    http_response_code(200);
     echo json_encode($returnArray);
 }
 

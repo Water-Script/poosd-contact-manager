@@ -27,13 +27,13 @@ function startLogin() {
   //  xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
     try {
         xhr.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
+            if (this.readyState === 4 && this.status === 200) {
                 let replyObj = JSON.parse(xhr.responseText)
                 userId = replyObj.id;
                 userN = replyObj.username;
                 bakeCookies(); // possibly unneeded
                 sendTo('mainPage.html');
-            } else if (this.status = 401) {
+            } else if (this.status === 400) {
                 document.getElementById("result").innerHTML = "The enterd Username or Password is incorrect.";
             }
             else {
@@ -101,7 +101,7 @@ function startRegister() {
     //document.getElementById("notice").innerHTML = "Going to send";
     try {
         xhr.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
+            if (this.readyState === 4 && this.status === 201) {
                 let replyObj = JSON.parse(xhr.responseText)
                 userId = replyObj.id;
                 userN = replyObj.username;
