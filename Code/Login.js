@@ -108,7 +108,7 @@ function startRegister() {
                 document.getElementById("result").innerHTML = "User Created, Please Login."
                 sendTo('/index.html');
             } else if (this.status != 201) {
-                document.getElementById("notice").innerHTML = "Error code: " + this.status;
+                document.getElementById("notice").innerHTML = "Error code: " + this.response;
             }
         }
         xhr.send(jsonload); // send off the package
