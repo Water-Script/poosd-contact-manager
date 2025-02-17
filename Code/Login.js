@@ -14,7 +14,7 @@ let userN = "";
 function startLogin() {
     userId = 0;
     userN = "";
-    //hash password here when added
+
     var tmpPass = document.getElementById("loginPass").value;
     var md5Hash = md5(tmpPass);
     var tempObj = { username: document.getElementById("loginName").value, password: md5Hash };
@@ -24,25 +24,24 @@ function startLogin() {
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", link, true);
-    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-    //setup is done send the request
+  //  xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
     try {
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 var replyObj = JSON.parse(xhr.responseText)
                 userId = replyObj.id;
                 userN = replyObj.username;
-                bakeCookies();
-                sendTo('index.html');
+                bakeCookies(); // possibly unneeded
+                sendTo('mainPage.html');
             } else if (this.status = 401) {
-                document.getElementById("result").innerHTML = "The enterd Username or Password is incorrect."
+                document.getElementById("result").innerHTML = "The enterd Username or Password is incorrect.";
             }
             else {
-                document.getElementById("result").innerHTML = "Please try again in a few minutes"
+                document.getElementById("result").innerHTML = "Error connecting: Please try again in a few minutes";
             }
 
         }
-        xhr.send(jsonload); // send off the package
+        xhr.send(jsonload);
     } catch (error) {
         document.getElementById("result").innerHTML = error.message
     }
@@ -84,8 +83,7 @@ function startRegister() {
     document.getElementById("notice").innerHTML = "testing";
     userN = "";
     userId = 0;
-    bakeCookies();
-    // Grab password  and compare with the entered here
+    bakeCookies(); //maybe unneaded
     var tmpPass = document.getElementById("registerPass").value;
     /*
         var p2 = document.getElementById("passwordPrime").value
@@ -100,19 +98,17 @@ function startRegister() {
     var link = apiUrl + '/Register.' + exten;
     let xhr = new XMLHttpRequest();
     xhr.open("POST", link, true)
-  //    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-  //  document.getElementById("notice").innerHTML = "Attempting to send a request";
     try {
         xhr.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 201) {
+            if (this.readyState == 4 && this.status == 200) {
                 var replyObj = JSON.parse(xhr.responseText)
                 userId = replyObj.id;
                 userN = replyObj.username;
                 document.getElementById("result").innerHTML = "User Created, Please Login."
                 sendTo('draftIndex.html');
             } else {
-                if(this.status == 0) {
-                    document.getElementById("notice").innerHTML = "Code: 0 ";
+                if(this.status == 400) {
+                    document.getElementById("notice").innerHTML = "User already exist. ";
                 }
             }
         }

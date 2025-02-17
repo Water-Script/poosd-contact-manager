@@ -10,6 +10,13 @@ body {
     border: 5px #000;
     color: #000000;
 }
+#subTitle
+{
+    font-size: 45px;
+    text-align: center;
+    border: 5px #000;
+    color: #000000;   
+}
 
 #loginDiv {
     width: 30%;
@@ -22,11 +29,10 @@ body {
 
 #regDiv {
     width: 30%;
-    height: 200px;
-    margin-left: 20%;
-    padding: 100px;
+    margin-left: 32%;
+    padding: 50px;
     background-color: #3e7059;
-    border-radius: 20px;
+    border-radius: 10px;
 }
 
 .buttons {
@@ -45,9 +51,23 @@ input[type="password"] {
     border-radius: 30px;
     text-align: center;
     /*location*/
-    margin-left: 20%;
-    margin-bottom: 2%;
-    width: 100%;
+
+    margin-bottom: 5%;
+    width: 400px;
+}
+#notice{
+    font-size: 20px;    
+    color: #7a1212;
+    border: #000000;
+}
+
+#registerButton{
+    width: 20%;
+    margin-left: 20%
+}
+#returnButton{
+    margin-left: 32%;
+    margin-top: 5px;
 }
 
 #loginName {
