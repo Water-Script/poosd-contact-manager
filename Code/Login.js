@@ -15,11 +15,11 @@ function startLogin() {
     userId = 0;
     userN = "";
 
-    var tmpPass = document.getElementById("loginPass").value;
-    var md5Hash = md5(tmpPass);
-    var tempObj = { username: document.getElementById("loginName").value, password: md5Hash };
+    let tmpPass = document.getElementById("loginPass").value;
+    //let md5Hash = md5(tmpPass);
+    let tempObj = { username: document.getElementById("loginName").value, password: tmpPass };
     let jsonload = JSON.stringify(tempObj);
-    var link = apiUrl + '/Login.' + exten;
+    let link = apiUrl + '/Login.' + exten;
 
 
     let xhr = new XMLHttpRequest();
@@ -28,7 +28,7 @@ function startLogin() {
     try {
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                var replyObj = JSON.parse(xhr.responseText)
+                let replyObj = JSON.parse(xhr.responseText)
                 userId = replyObj.id;
                 userN = replyObj.username;
                 bakeCookies(); // possibly unneeded
@@ -58,7 +58,7 @@ function startLogin() {
  * expires 30mins after being saved
  */
 function bakeCookies() {
-    var date = new Date();
+    let date = new Date();
     date.setTime(date.getTime() + (30 * 60 * 1000));
     document.cookie = "username=" + userN + "|userid=" + userId + "expires=" + date.toGMTString();
 
@@ -83,18 +83,18 @@ function startRegister() {
     userN = "";
     userId = 0;
     bakeCookies(); //maybe unneaded
-    var tmpPass = document.getElementById("registerPass").value;
+    let tmpPass = document.getElementById("registerPass").value;
     /*
-        var p2 = document.getElementById("passwordPrime").value
+        let p2 = document.getElementById("passwordPrime").value
         if(p1 !=== p2) 
         {
         //dont go through and leave msg that Passwords don't match
         }
     */
-    hashedPass = md5(tmpPass);
-    var tempObj = { username: document.getElementById("registerName").value, password: hashedPass }
+    // hashedPass = md5(tmpPass);
+    let tempObj = { username: document.getElementById("registerName").value, password: tmpPass }
     let jsonload = JSON.stringify(tempObj);
-    var link = apiUrl + '/Register.' + exten;
+    let link = apiUrl + '/Register.' + exten;
     //document.getElementById("notice").innerHTML = "test";
     let xhr = new XMLHttpRequest();
     xhr.open("POST", link, true)
@@ -102,7 +102,7 @@ function startRegister() {
     try {
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
-                var replyObj = JSON.parse(xhr.responseText)
+                let replyObj = JSON.parse(xhr.responseText)
                 userId = replyObj.id;
                 userN = replyObj.username;
                 document.getElementById("result").innerHTML = "User Created, Please Login."
