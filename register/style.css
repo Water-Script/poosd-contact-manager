@@ -1,5 +1,87 @@
-body
+body {
+
+    background-color: #7d9793;
+}
+
+#title {
+    font-size: 60px;
+    margin: 5% 5%;
+    text-align: center;
+    border: 5px #000;
+    color: #000000;
+}
+#subTitle
 {
-    /* Test color, not final - Jairyn */ 
-background-color: #a3a3a3;
+    font-size: 45px;
+    text-align: center;
+    border: 5px #000;
+    color: #000000;   
+}
+
+#loginDiv {
+    width: 30%;
+    margin-left: 20%;
+    padding: 50px;
+    background-color: #3e7059;
+    border-radius: 20px;
+
+}
+
+#regDiv {
+    width: 30%;
+    margin-left: 32%;
+    padding: 50px;
+    background-color: #3e7059;
+    border-radius: 10px;
+}
+
+.buttons {
+    font-size: 20px;
+    border-radius: 20px;
+}
+
+.buttons:hover {
+    background-color: #395f48;
+    color: #FFFFFF;
+    opacity: 20%;
+}
+
+input[type="text"],
+input[type="password"] {
+    border-radius: 30px;
+    text-align: center;
+    /*location*/
+
+    margin-bottom: 5%;
+    width: 400px;
+}
+#notice{
+    font-size: 20px;    
+    color: #7a1212;
+    border: #000000;
+}
+
+#registerButton{
+    width: 20%;
+    margin-left: 20%
+}
+#returnButton{
+    margin-left: 32%;
+    margin-top: 5px;
+}
+
+#loginName {
+    font-size: 30px;
+}
+
+#registerPass {
+    font-size: 30px;
+}
+
+#registerName {
+    font-size: 30px;
+}
+
+#loginPass {
+    font-size: 30px;
 }
