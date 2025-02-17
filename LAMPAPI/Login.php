@@ -5,59 +5,51 @@ ini_set("display_errors", "1");
 ini_set("log_errors", 1);
 // Include the database connection file
 require "DBConnection.php";
-
 $inData = getRequestInfo();
 
-
-
-
-// Check if connection is available
-if (!$conn) {
-    returnWithError("Database connection error.");
-} else {
-    // Prepare SQL statement to find user by login
-    $stmt = $conn->prepare("SELECT ID,Username, Password FROM Users WHERE Username=?");
-    $stmt->bind_param("s", $inData["Username"]); // Bind the username value as a string
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($row = $result->fetch_assoc()) {
-        // Compare the password directly 
-        if ($inData["Password"] === $row['Password']) {
-        returnWithInfo($row['Username'], $row['Password'], $row['ID']);
-    
-        } else {
-            returnWithError("Incorrect Password");
-        }
-    } else {
-        returnWithError("No User Found");
+// Prepare SQL statement to find user by login
+$stmt = $conn->prepare("SELECT ID,Username,Password FROM Users WHERE Username=?");
+$stmt->bind_param("s", $inData["Username"]); // Bind the username value as a string
+$stmt->execute();
+$result = $stmt->get_result();
+if ($row = $result->fetch_assoc()) {
+    // Compare the password directly 
+    if ($inData["Password"] === $row["Password"]) {
+        returnWithInfo($row["Username"], $row["ID"]);
+    } 
+    else {
+        returnWithError("MismatchPasswordError","The inputted password is incorrect.");
     }
-
-    // Close the statement
-    $stmt->close();
+} else {
+    returnWithError("NonexistentUserError","There is no user with this username.");
 }
+// Close the statement
+$stmt->close();
+$conn->close();
 
 // Helper function to retrieve JSON input
 function getRequestInfo() {
     return json_decode(file_get_contents("php://input"), true);
 }
 
-// Helper function to send JSON response
-function sendResultInfoAsJson($obj, $statusCode = 200) {
-    header('Content-type: application/json');
-    http_response_code($statusCode);
-    echo $obj;
+function returnWithError($err, $message) {
+    $returnArray = array(
+        "error" => $err,
+        "message" => $message
+    );
+    header("Content-type: application/json; charset=utf-8");
+    http_response_code(400);
+    echo json_encode($returnArray);
 }
 
-// Helper function to return an error message
-function returnWithError($err) {
-    $retValue = json_encode(["id" => 0, "Username" => "", "Password" => "", "error" => $err]);
-    sendResultInfoAsJson($retValue, 400);
+function returnWithInfo($username, $id) {
+    $returnArray = array(
+        "userId" => $id,
+        "username" => $username
+    );
+    header("Content-type: application/json; charset=utf-8");
+    http_response_code(201);
+    echo json_encode($returnArray);
 }
 
-// Helper function to return success response
-function returnWithInfo($Username, $Password, $id) {
-    $retValue = json_encode(["id" => $id, "Username" => $Username, "Password" => $Password, "error" => ""]);
-    sendResultInfoAsJson($retValue);
-}
 ?>
