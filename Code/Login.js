@@ -1,10 +1,12 @@
+const md5 = require("./md5");
+
 //#region Constant and Globals
-const apiUrl = 'http://Ingerberwetrust.com/LAMPAPI'; //api
+const apiUrl = 'http://ingerberwetrust.com/LAMPAPI'; //api
 const exten = 'php'; //extension for the api
 
 let userId = 0;
-let firstN = "";
-let lastN = "";
+let UserN = "";
+
 //#endregion 
 
 /** 
@@ -14,13 +16,11 @@ let lastN = "";
  */
 function startLogin() {
     userId = 0;
-    firstN = "";
-    lastN = "";
-
-
+    UserN = "";
     //hash password here when added
-
-    var tempObj = { login:document.getElementById("loginName").value, password:document.getElementById("loginPass").value };
+    var tmpPass = document.getElementById("loginPass").value;
+    var md5Password = md5(tmpPass);
+    var tempObj = { username:document.getElementById("loginName").value, password:md5Password};
     let jsonload = JSON.stringify(tempObj);
     var link = apiUrl + '/Login.' + exten;
 
@@ -34,8 +34,7 @@ function startLogin() {
             if (this.readyState == 4 && this.status == 200) {
                 var replyObj = JSON.parse(xhr.responseText)
                 userId = replyObj.id;
-                firstN = replyObj.firstname;
-                lastN  = replyObj.lastN;
+                userN = replyObj.username;
                 bakeCookies();
                 sendTo('index.html');
             } else{
@@ -43,8 +42,8 @@ function startLogin() {
             }
         }
         xhr.send(jsonload); // send off the package
-    } catch (err) {
-        document.getElementById("result").innerHTML = err.message
+    } catch (error) {
+        document.getElementById("result").innerHTML = error.message
     }
 
 
@@ -62,7 +61,7 @@ function bakeCookies() {
     ;
     var date = new Date();
     date.setTime(date.getTime() + (30 * 60 * 1000));
-    document.cookie = "firstname=" + firstN + "|lastname=" + lastN + "|userid=" + userId + "expires=" + date.toGMTString();
+    document.cookie = "username=" + userN + "|userid=" + userId + "expires=" + date.toGMTString();
 
 }
 
@@ -74,5 +73,54 @@ function bakeCookies() {
 function sendTo(site) {
 
     window.location.href = site;
+
+}
+/**
+ * Creates a new user, sends the username and password to API
+ * 
+ * JSON = username: registerName, password: registerPass}
+ */
+function startRegister() {
+    userN = "";
+    userId = 0;
+    document.getElementById("notice").innerHTML = "";
+    bakeCookies();
+    // Grab password  and compare with the entered here
+    var tmpPass = document.getElementById("registerPass").value;
+    /*
+        var p2 = document.getElementById("passwordPrime").value
+        if(p1 !=== p2) 
+        {
+        //dont go through and leave msg that Passwords don't match
+        }
+    */
+   hashedPass = md5(tmpPass);
+    var tempObj ={username:document.getElementById("registerName").value, password:p1}
+    let jsonload = JSON.stringify(tempObj);
+    var link = apiUrl + '/Register.' + exten;
+    let xhr = new XMLHttpRequest();
+    xhr.open("POST", link, true)
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    try {
+        xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var replyObj = JSON.parse(xhr.responseText)
+                userId = replyObj.id;
+                userN = replyObj.username;
+                sendTo('draftIndex.html');
+            } else{
+                document.getElementById("notice").innerHTML = "Account already exist"
+            }
+        }
+        xhr.send(jsonload); // send off the package
+    } catch (error) {
+        document.getElementById("notice").innerHTML = error.message
+
+    }
+
+    
+
+
+
 
 }

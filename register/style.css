@@ -26,18 +26,11 @@ color: #000000;
 #regDiv
 {
     width: 30%;
+    height: 200px;
     margin-left: 20%;
-    padding: 50px;
+    padding: 100px;
     background-color: #3e7059;
     border-radius: 20px;
-}
-#loginName
-{
-    font-size: 30px;
-}
-#loginPass
-{
-    font-size: 30px;
 }
 
 .buttons
@@ -61,5 +54,22 @@ input[type="text"], input[type="password"]{
     margin-bottom: 2%;
     width: 100%;
 }
+#loginName
+{
+    font-size: 30px;
+}
+#registerPass
+{
+    font-size: 30px;
+}
+#registerName
+{
+    font-size: 30px;
+}
+#loginPass
+{
+    font-size: 30px;
+}
+
 
 
