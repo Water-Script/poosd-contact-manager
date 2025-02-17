@@ -18,10 +18,10 @@ if ($row = $result->fetch_assoc()) {
         returnWithInfo($row["Username"], $row["ID"]);
     } 
     else {
-        returnWithError("MismatchPasswordError","The inputted password is incorrect.");
+        returnWithError("MismatchPasswordError","The input password is incorrect.");
     }
 } else {
-    returnWithError("NonexistentUserError","There is no user with this username.");
+    returnWithError("AccountNotFoundError","There is no account with this username.");
 }
 // Close the statement
 $stmt->close();

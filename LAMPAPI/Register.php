@@ -15,7 +15,7 @@ $checkUser->execute();
 $result = $checkUser->get_result();  // Check if a user exists
 
 if ($row = $result->fetch_assoc()) {
-    returnWithError("ExistingUserError", "A user already exists with this username.");
+    returnWithError("ExistingUserError", "An account already exists with that username.");
     exit();
 }
 
