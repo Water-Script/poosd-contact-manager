@@ -95,10 +95,10 @@ function startRegister() {
     var tempObj = { username: document.getElementById("registerName").value, password: hashedPass }
     let jsonload = JSON.stringify(tempObj);
     var link = apiUrl + '/Register.' + exten;
-    document.getElementById("notice").innerHTML = "test";
+    //document.getElementById("notice").innerHTML = "test";
     let xhr = new XMLHttpRequest();
     xhr.open("POST", link, true)
-    document.getElementById("notice").innerHTML = "Going to send";
+    //document.getElementById("notice").innerHTML = "Going to send";
     try {
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
@@ -108,11 +108,7 @@ function startRegister() {
                 document.getElementById("result").innerHTML = "User Created, Please Login."
                 sendTo('/index.html');
             } else {
-                if(this.status== 400) {
-                    document.getElementById("notice").innerHTML = "User already exist. ";
-                } else {
                     document.getElementById("notice").innerHTML = "Error code: " +this.status;
-                }
             }
         }
         xhr.send(jsonload); // send off the package
