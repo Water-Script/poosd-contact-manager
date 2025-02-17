@@ -34,9 +34,9 @@ function startLogin() {
                 bakeCookies(); // possibly unneeded
                 sendTo('mainPage.html');
             } else if (this.status === 400) {
-                document.getElementById("result").innerHTML = "The enterd Username or Password is incorrect.";
+                document.getElementById("result").innerHTML = "The entered Username or Password is incorrect.";
             }
-            else {
+            else if (this.status === 500) {
                 document.getElementById("result").innerHTML = "Error connecting: Please try again in a few minutes";
             }
 
@@ -107,14 +107,13 @@ function startRegister() {
                 userN = replyObj.username;
                 document.getElementById("result").innerHTML = "User Created, Please Login."
                 sendTo('/index.html');
-            } else {
-                    document.getElementById("notice").innerHTML = "Error code: " +this.status;
+            } else if (this.status != 201) {
+                document.getElementById("notice").innerHTML = "Error code: " + this.status;
             }
         }
         xhr.send(jsonload); // send off the package
     } catch (error) {
         document.getElementById("notice").innerHTML = error.message
-
     }
 
 }

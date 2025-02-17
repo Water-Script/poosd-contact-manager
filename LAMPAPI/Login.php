@@ -18,10 +18,10 @@ if ($row = $result->fetch_assoc()) {
         returnWithInfo($row["Username"], $row["ID"]);
     } 
     else {
-        returnWithError("MismatchPasswordError","The input password is incorrect.");
+        returnWithError("MismatchPasswordError","The input password is incorrect.", 400);
     }
 } else {
-    returnWithError("AccountNotFoundError","There is no account with this username.");
+    returnWithError("AccountNotFoundError","There is no account with this username.", 400);
 }
 // Close the statement
 $stmt->close();
@@ -32,13 +32,13 @@ function getRequestInfo() {
     return json_decode(file_get_contents("php://input"), true);
 }
 
-function returnWithError($err, $message) {
+function returnWithError($err, $message, $code) {
     $returnArray = array(
         "error" => $err,
         "message" => $message
     );
     header("Content-type: application/json; charset=utf-8");
-    http_response_code(400);
+    http_response_code($code);
     echo json_encode($returnArray);
 }
 

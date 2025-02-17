@@ -15,12 +15,12 @@ $checkUser->execute();
 $result = $checkUser->get_result();  // Check if a user exists
 
 if ($row = $result->fetch_assoc()) {
-    returnWithError("ExistingUserError", "An account already exists with that username.");
+    returnWithError("ExistingUserError", "An account already exists with that username.", 400);
     exit();
 }
 
 if (empty($username) || empty($password)) {
-    returnWithError("MalformedRequestError", "All fields must be filled.");
+    returnWithError("MalformedRequestError", "All fields must be filled.", 400);
     exit();
 }  // Validate fields not being empty
 
@@ -36,7 +36,7 @@ if ($registerUser->execute()) {
     if ($row = $result->fetch_assoc()) {
         returnWithInfo($username, $row["ID"]);
     } else {
-        returnWithError("InternalServerError", "The server has encountered an internal error during the processing of the request.");
+        returnWithError("InternalServerError", "The server has encountered an internal error during the processing of the request.", 500);
     }
 }
 
@@ -48,13 +48,13 @@ function getRequestInfo() {
     return json_decode(file_get_contents("php://input"), true);
 }
 
-function returnWithError($err, $message) {
+function returnWithError($err, $message, $code) {
     $returnArray = array(
         "error" => $err,
         "message" => $message
     );
     header("Content-type: application/json; charset=utf-8");
-    http_response_code(400);
+    http_response_code($code);
     echo json_encode($returnArray);
 }
 
