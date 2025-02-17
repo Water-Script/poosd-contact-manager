@@ -80,7 +80,6 @@ function sendTo(site) {
  * JSON  {username:registerName, password: MD5 Hashed password}
  */
 function startRegister() {
-    document.getElementById("notice").innerHTML = "testing";
     userN = "";
     userId = 0;
     bakeCookies(); //maybe unneaded
@@ -96,8 +95,10 @@ function startRegister() {
     var tempObj = { username: document.getElementById("registerName").value, password: hashedPass }
     let jsonload = JSON.stringify(tempObj);
     var link = apiUrl + '/Register.' + exten;
+    document.getElementById("notice").innerHTML = "test";
     let xhr = new XMLHttpRequest();
     xhr.open("POST", link, true)
+    document.getElementById("notice").innerHTML = "Going to send";
     try {
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
@@ -105,10 +106,12 @@ function startRegister() {
                 userId = replyObj.id;
                 userN = replyObj.username;
                 document.getElementById("result").innerHTML = "User Created, Please Login."
-                sendTo('draftIndex.html');
+                sendTo('/index.html');
             } else {
-                if(this.status == 400) {
+                if(this.status== 400) {
                     document.getElementById("notice").innerHTML = "User already exist. ";
+                } else {
+                    document.getElementById("notice").innerHTML = "Error code: " +this.status;
                 }
             }
         }
