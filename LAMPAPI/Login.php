@@ -9,12 +9,12 @@ $inData = getRequestInfo();
 
 // Prepare SQL statement to find user by login
 $stmt = $conn->prepare("SELECT ID,Username,Password FROM Users WHERE Username=?");
-$stmt->bind_param("s", $inData["Username"]); // Bind the username value as a string
+$stmt->bind_param("s", $inData["username"]); // Bind the username value as a string
 $stmt->execute();
 $result = $stmt->get_result();
 if ($row = $result->fetch_assoc()) {
     // Compare the password directly 
-    if ($inData["Password"] === $row["Password"]) {
+    if ($inData["password"] === $row["Password"]) {
         returnWithInfo($row["Username"], $row["ID"]);
     } 
     else {
