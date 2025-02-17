@@ -4,11 +4,11 @@ const exten = 'php'; //extension for the api
 let userId = 0;
 let userN = "";
 
-//#endregion 
+//#endregion
 
-/** 
+/**
  * Attemtps to login the user with the password and username.
- * 
+ *
  * Sends a JSON package with the username 'login' and password 'password' in a json format
  */
 function startLogin() {
@@ -28,16 +28,18 @@ function startLogin() {
     try {
         xhr.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                let replyObj = JSON.parse(xhr.responseText)
+                let replyObj = JSON.parse(xhr.responseText);
                 userId = replyObj.id;
                 userN = replyObj.username;
                 bakeCookies(); // possibly unneeded
                 sendTo('mainPage.html');
             } else if (this.status === 400) {
-                document.getElementById("result").innerHTML = "The entered Username or Password is incorrect.";
+                let reply = JSON.parse(xhr.responseText);
+                document.getElementById("result").innerHTML = `ERROR (${reply.error}): ${reply.message}`;
             }
             else if (this.status === 500) {
-                document.getElementById("result").innerHTML = "Error connecting: Please try again in a few minutes";
+                let reply = JSON.parse(xhr.responseText);
+                document.getElementById("result").innerHTML = `SERVER ERROR (${reply.error}): ${reply.message}`;
             }
 
         }
@@ -52,9 +54,9 @@ function startLogin() {
 
 /**
  * Bakes cookies YUM - I'm going insane
- * 
- * saves cookies, Primaraly First and last name, user ID.  All seperated by a | 
- * 
+ *
+ * saves cookies, Primaraly First and last name, user ID.  All seperated by a |
+ *
  * expires 30mins after being saved
  */
 function bakeCookies() {
@@ -66,7 +68,7 @@ function bakeCookies() {
 
 /**
  * Swaps window to the corrosponding html file
- * 
+ *
  * @param {String} site html location
  */
 function sendTo(site) {
@@ -76,7 +78,7 @@ function sendTo(site) {
 }
 /**
  * Creates a new user, sends the username and password to API
- * 
+ *
  * JSON  {username:registerName, password: MD5 Hashed password}
  */
 function startRegister() {
@@ -86,7 +88,7 @@ function startRegister() {
     let tmpPass = document.getElementById("registerPass").value;
     /*
         let p2 = document.getElementById("passwordPrime").value
-        if(p1 !=== p2) 
+        if(p1 !=== p2)
         {
         //dont go through and leave msg that Passwords don't match
         }
