@@ -107,10 +107,14 @@ function startRegister() {
                 let replyObj = JSON.parse(xhr.responseText)
                 userId = replyObj.id;
                 userN = replyObj.username;
-                document.getElementById("result").innerHTML = "User Created, Please Login."
+                document.getElementById("result").innerHTML = `User Created, Please Login.`;
                 sendTo('/index.html');
-            } else if (this.status != 201) {
-                document.getElementById("notice").innerHTML = "Error code: " + this.response;
+            } else if (this.status === 400) {
+                let reply = JSON.parse(xhr.responseText);
+                document.getElementById("result").innerHTML = `ERROR (${reply.error}): ${reply.message}`;
+            } else if (this.status === 500) {
+                let reply = JSON.parse(xhr.responseText);
+                document.getElementById("result").innerHTML = `SERVER ERROR (${reply.error}): ${reply.message}`;
             }
         }
         xhr.send(jsonload); // send off the package
