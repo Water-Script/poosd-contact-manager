@@ -30,7 +30,6 @@ function startLogin() {
     xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
     //setup is done send the request
     try {
-        document.getElementById("result").innerHTML = link;
         xhr.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 var replyObj = JSON.parse(xhr.responseText)
