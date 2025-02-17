@@ -107,7 +107,7 @@ function startRegister() {
                 let replyObj = JSON.parse(xhr.responseText)
                 userId = replyObj.id;
                 userN = replyObj.username;
-                document.getElementById("result").innerHTML = `User Created, Please Login.`;
+                document.getElementById("result").innerHTML = "User CreatMade ed, Please Login.";
                 sendTo('/index.html');
             } else if (this.status === 400) {
                 let reply = JSON.parse(xhr.responseText);
