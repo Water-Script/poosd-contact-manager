@@ -6,9 +6,7 @@ ini_set("log_errors", 1); // Report errors in console if it occurs
 
 require "DBConnection.php";
 
-$inData = getRequestInfo();
+$query = $_SERVER['QUERY_STRING'];
+echo $query;
 
-function getRequestInfo() {
-    return json_decode(file_get_contents("php://input"), true);
-}
 ?>
