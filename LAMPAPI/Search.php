@@ -6,7 +6,6 @@ ini_set("log_errors", 1); // Report errors in console if it occurs
 
 require "DBConnection.php";
 
-$query = $_SERVER['QUERY_STRING'];
-echo $query;
+echo $_GET["userID"] . $_GET["type"] . $_GET["search"];
 
 ?>
