@@ -13,21 +13,22 @@ $password = $inData["password"];
 // Prepare SQL statement to find user by login
 $loginUser = $conn->prepare("SELECT ID,Username,Password FROM Users WHERE Username=?");
 $loginUser->bind_param("s", $username); // Bind the username value as a string
-$loginUser->execute();
-$result = $loginUser->get_result();
-if ($row = $result->fetch_assoc()) {
-    if ($password === $row["Password"]) {
-        returnWithInfo($row["Username"], $row["ID"]);
-    } 
-    else {
-        returnWithError("MismatchPasswordError","The input password is incorrect.", 400);
+if ($loginUser->execute()) {
+    $result = $loginUser->get_result();
+    if ($row = $result->fetch_assoc()) {
+        if ($password === $row["Password"]) {
+            returnWithInfo($row["Username"], $row["ID"]);
+        } 
+        else {
+            returnWithError("MismatchPasswordError","The input password is incorrect.", 400);
+        }
+    } else {
+        returnWithError("AccountNotFoundError","There is no account with this username.", 400);
     }
-} else {
-    returnWithError("AccountNotFoundError","There is no account with this username.", 400);
+    // Close the statements
+    $loginUser->close();
+    $conn->close();
 }
-// Close the statements
-$loginUser->close();
-$conn->close();
 
 // Helper function to retrieve JSON input
 function getRequestInfo() {
