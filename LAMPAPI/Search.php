@@ -45,7 +45,7 @@ function searchDB($conn, $searchStr) {
             while ($row = $result->fetch_assoc()) {
                 $contacts[] = $row;
             }
-            var_dump($contacts);
+            returnWithInfo($contacts);
         }
         else {
             returnWithError("ContactNotFoundError", "The requested contact could not be found.", 404);
@@ -69,7 +69,7 @@ function returnWithError($err, $message, $code) {
 function returnWithInfo($contacts) {
     header("Content-type: application/json; charset=utf-8");
     http_response_code(200);
-    echo json_encode($returnArray);
+    echo json_encode(["contacts" = > $contacts]);
 }
 
 ?>
