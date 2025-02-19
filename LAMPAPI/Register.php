@@ -25,8 +25,6 @@ if ($checkUser->execute()) {
     }  // Validate fields not being empty
 }
 
-$result->close();
-
 $registerUser = $conn->prepare("INSERT INTO Users (Username,Password) VALUES (?,?)");
 $registerUser->bind_param("ss", $username, $password);
 
@@ -41,11 +39,12 @@ if ($registerUser->execute()) {
     } else {
         returnWithError("InternalServerError", "The server has encountered an internal error during the processing of the request.", 500);
     }
+
+    $registerUser->close();
+    $getRegisterUser->close();
+    $conn->close();
 }
 
-$registerUser->close();
-$getRegisterUser->close();
-$conn->close();
 
 function getRequestInfo() {
     return json_decode(file_get_contents("php://input"), true);
