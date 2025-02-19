@@ -7,8 +7,8 @@ ini_set("log_errors", 1);
 require "DBConnection.php";
 $inData = getRequestInfo();
 
-$username = $inData["username"]
-$password = $inData["password"]
+$username = $inData["username"];
+$password = $inData["password"];
 
 // Prepare SQL statement to find user by login
 $stmt = $conn->prepare("SELECT ID,Username,Password FROM Users WHERE Username=?");
