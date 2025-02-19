@@ -24,17 +24,19 @@ if (empty($username) || empty($password)) {
     exit();
 }  // Validate fields not being empty
 
+$result->close();
+
 $registerUser = $conn->prepare("INSERT INTO Users (Username,Password) VALUES (?,?)");
 $registerUser->bind_param("ss", $username, $password);
 
 if ($registerUser->execute()) {
-    $getRegisterUser = $conn->prepare("SELECT ID FROM Users WHERE Username=?");
+    $getRegisterUser = $conn->prepare("SELECT ID, Username FROM Users WHERE Username=?");
     $getRegisterUser->bind_param("s", $username);
     $getRegisterUser->execute();
     $result = $getRegisterUser->get_result();  // create user
 
     if ($row = $result->fetch_assoc()) {
-        returnWithInfo($username, $row["ID"]);
+        returnWithInfo($row["Username"], $row["ID"]);
     } else {
         returnWithError("InternalServerError", "The server has encountered an internal error during the processing of the request.", 500);
     }
