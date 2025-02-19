@@ -12,16 +12,20 @@ $search = $_GET["search"];
 
 switch ($type) {
     case "getAll":
-        $searchStr = "ID=" . $userID;
-        echo $searchStr;
+        $searchStr = "UserID=" . $userID;
         break;
     case "firstname":
+        $searchStr = "UserID=" . $userID . " AND " . "FirstName='" . $search . "'";
+        echo $searchStr;
         break;
     case "lastname":
+        $searchStr = "UserID=" . $userID . " AND " . "LastName='" . $search . "'";
         break;
     case "phonenumber":
+        $searchStr = "UserID=" . $userID . " AND " . "PhoneNumber='" . $search . "'";
         break;
     case "email":
+        $searchStr = "UserID=" . $userID . " AND " . "Email='" . $search . "'";
         break;
     default:
         returnWithError("IncorrectSearchTypeError", "The chosen search type is invalid.", 400);
