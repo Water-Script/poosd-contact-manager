@@ -36,38 +36,24 @@ switch ($type) {
         break;
 }
 
-searchDB($conn, $searchStr);
-
 function searchDB($conn, $searchStr) {
-    $searchContact = $conn->prepare("SELECT FirstName, LastName, PhoneNumber, Email FROM Contacts WHERE ?");
+    $query = "SELECT FirstName, LastName, PhoneNumber, Email FROM Contacts WHERE " . $searchStr;
+    $searchContact = $conn->prepare($query);
     $searchContact->bind_param("s", $searchStr);
     if ($searchContact->execute()) {
         if ($result = $searchContact->get_result()) {
             $contacts = array();
             while ($row = $result->fetch_assoc()) {
-                $array_push($contacts, array($row["FirstName"], $row["LastName"], $row["PhoneNumber"], $row["Email"]));
-                var_dump($contacts);
-                // each contact needs to be added to an array "contacts" with variables for each field
-                /* 
-                {
-                    "contacts": [
-                    {
-                        "userID": 12
-                        "firstname": "bob"
-                        "lastname": "someone"
-                        "phonenum": 1234567890
-                        "email": bob@gmail.com
-                    }
-                    ]
-                }
-                */
-                // then return said contacts array.
-                returnWithInfo($contacts);
+                $contacts[] = $row;
             }
+            var_dump($contacts);
         }
         else {
             returnWithError("ContactNotFoundError", "The requested contact could not be found.", 404);
         }
+    }
+    else {
+        returnWithError("InternalServerError", "The server has encountered an internal error during the processing of the request.")
     }
 }
 
@@ -82,9 +68,6 @@ function returnWithError($err, $message, $code) {
 }
 
 function returnWithInfo($contacts) {
-    $returnArray = array(
-        "contacts" => "[" . $contacts . "]"
-    );
     header("Content-type: application/json; charset=utf-8");
     http_response_code(200);
     echo json_encode($returnArray);
