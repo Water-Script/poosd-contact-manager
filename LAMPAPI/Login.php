@@ -7,32 +7,31 @@ ini_set("log_errors", 1);
 require "DBConnection.php";
 $inData = getRequestInfo();
 
-$username = $inData["username"];
-$password = $inData["password"];
+$username = $inData["username"]
+$password = $inData["password"]
+
+// Compare the password directly
+if (empty($username) || empty($password)) {
+    returnWithError("EmptyFieldsError", "Both fields must be filled to login.", 400);
+}
 
 // Prepare SQL statement to find user by login
-$stmt = $conn->prepare("SELECT ID,Username,Password FROM Users WHERE Username=?");
-$stmt->bind_param("s", $username); // Bind the username value as a string
-$stmt->execute();
-$result = $stmt->get_result();
+$loginUser = $conn->prepare("SELECT ID,Username,Password FROM Users WHERE Username=?");
+$loginUser->bind_param("s", $username); // Bind the username value as a string
+$loginUser->execute();
+$result = $loginUser->get_result();
 if ($row = $result->fetch_assoc()) {
-    // Compare the password directly
-    if (empty($password) || empty($username)) {
-        returnWithError("EmptyFieldsError", "Both fields must be filled to login.", 400);
-    }
+    if ($password === $row["Password"]) {
+        returnWithInfo($row["Username"], $row["ID"]);
+    } 
     else {
-        if ($password === $row["Password"]) {
-            returnWithInfo($row["Username"], $row["ID"]);
-        } 
-        else {
-            returnWithError("MismatchPasswordError","The input password is incorrect.", 400);
-        }
+        returnWithError("MismatchPasswordError","The input password is incorrect.", 400);
     }
 } else {
     returnWithError("AccountNotFoundError","There is no account with this username.", 400);
 }
 // Close the statement
-$stmt->close();
+$loginUser->close();
 $conn->close();
 
 // Helper function to retrieve JSON input
