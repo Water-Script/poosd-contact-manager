@@ -39,7 +39,6 @@ switch ($type) {
 function searchDB($conn, $searchStr) {
     $query = "SELECT FirstName, LastName, PhoneNumber, Email FROM Contacts WHERE " . $searchStr;
     $searchContact = $conn->prepare($query);
-    $searchContact->bind_param("s", $searchStr);
     if ($searchContact->execute()) {
         if ($result = $searchContact->get_result()) {
             $contacts = array();
