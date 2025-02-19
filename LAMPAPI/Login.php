@@ -7,18 +7,26 @@ ini_set("log_errors", 1);
 require "DBConnection.php";
 $inData = getRequestInfo();
 
+$username = $inData["username"]
+$password = $inData["password"]
+
 // Prepare SQL statement to find user by login
 $stmt = $conn->prepare("SELECT ID,Username,Password FROM Users WHERE Username=?");
-$stmt->bind_param("s", $inData["username"]); // Bind the username value as a string
+$stmt->bind_param("s", $username); // Bind the username value as a string
 $stmt->execute();
 $result = $stmt->get_result();
 if ($row = $result->fetch_assoc()) {
-    // Compare the password directly 
-    if ($inData["password"] === $row["Password"]) {
-        returnWithInfo($row["Username"], $row["ID"]);
-    } 
+    // Compare the password directly
+    if (empty($password) || empty($username)) {
+        returnWithError("EmptyFieldsError", "Both fields must be filled to login.", 400);
+    }
     else {
-        returnWithError("MismatchPasswordError","The input password is incorrect.", 400);
+        if ($password === $row["Password"]) {
+            returnWithInfo($row["Username"], $row["ID"]);
+        } 
+        else {
+            returnWithError("MismatchPasswordError","The input password is incorrect.", 400);
+        }
     }
 } else {
     returnWithError("AccountNotFoundError","There is no account with this username.", 400);
