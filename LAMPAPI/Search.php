@@ -38,9 +38,9 @@ switch ($type) {
 
 function searchDB($conn, $searchStr) {
     $query = "SELECT FirstName, LastName, PhoneNumber, Email FROM Contacts WHERE " . $searchStr;
-    $searchContact = $conn->prepare($query);
-    if ($searchContact->execute()) {
-        if ($result = $searchContact->get_result()) {
+    $result = $conn->query($query);
+    if ($result) {
+        if ($result->num_rows > 0) {
             $contacts = array();
             while ($row = $result->fetch_assoc()) {
                 $contacts[] = $row;
@@ -52,7 +52,7 @@ function searchDB($conn, $searchStr) {
         }
     }
     else {
-        returnWithError("InternalServerError", "The server has encountered an internal error during the processing of the request.")
+        returnWithError("InternalServerError", "The server has encountered an internal error during the processing of the request.");
     }
 }
 
