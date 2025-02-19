@@ -11,18 +11,19 @@ $password = $inData["password"];
 
 $checkUser = $conn->prepare("SELECT ID FROM Users WHERE Username=?");
 $checkUser->bind_param("s", $username);
-$checkUser->execute();
-$result = $checkUser->get_result();  // Check if a user exists
+if ($checkUser->execute()) {
+    $result = $checkUser->get_result();  // Check if a user exists
 
-if ($row = $result->fetch_assoc()) {
-    returnWithError("ExistingUserError", "An account already exists with that username.", 400);
-    exit();
+    if ($row = $result->fetch_assoc()) {
+        returnWithError("ExistingUserError", "An account already exists with that username.", 400);
+        exit();
+    }
+
+    if (empty($username) || empty($password)) {
+        returnWithError("MalformedRequestError", "All fields must be filled.", 400);
+        exit();
+    }  // Validate fields not being empty
 }
-
-if (empty($username) || empty($password)) {
-    returnWithError("MalformedRequestError", "All fields must be filled.", 400);
-    exit();
-}  // Validate fields not being empty
 
 $result->close();
 
