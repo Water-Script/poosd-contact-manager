@@ -46,6 +46,7 @@ function searchDB($conn, $searchStr) {
             $contacts = array();
             while ($row = $result->fetch_assoc()) {
                 $array_push($contacts, array($row["FirstName"], $row["LastName"], $row["PhoneNumber"], $row["Email"]));
+                var_dump($contacts);
                 // each contact needs to be added to an array "contacts" with variables for each field
                 /* 
                 {
@@ -82,7 +83,7 @@ function returnWithError($err, $message, $code) {
 
 function returnWithInfo($contacts) {
     $returnArray = array(
-        "contacts" => $contacts
+        "contacts" => "[" . $contacts . "]"
     );
     header("Content-type: application/json; charset=utf-8");
     http_response_code(200);
