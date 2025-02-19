@@ -14,14 +14,16 @@ let userN = "";
 function startLogin() {
     userId = 0;
     userN = "";
-
-    let tmpPass = document.getElementById("loginPass").value;
-    //let md5Hash = md5(tmpPass);
-    let tempObj = { username: document.getElementById("loginName").value, password: tmpPass };
+    document.getElementById("result").innerHTML = "";
+    let fields = [document.getElementById("loginName").value, document.getElementById("loginPass").value]
+    if(checkEmpty(fields))
+        {
+            document.getElementById("result").innerHTML = "Please make sure all fields are filled out";
+            return(0);
+        } 
+    let tempObj = { username: fields[0], password: fields[1]};
     let jsonload = JSON.stringify(tempObj);
     let link = apiUrl + '/Login.' + exten;
-
-
     let xhr = new XMLHttpRequest();
     xhr.open("POST", link, true);
   //  xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
@@ -79,13 +81,18 @@ function sendTo(site) {
 /**
  * Creates a new user, sends the username and password to API
  *
- * JSON  {username:registerName, password: MD5 Hashed password}
+ * JSON  {username:registerName, password: password}
  */
 function startRegister() {
     userN = "";
     userId = 0;
+    document.getElementById("notice").innerHTML ="";
     bakeCookies(); //maybe unneaded
-    let tmpPass = document.getElementById("registerPass").value;
+   let fields = [document.getElementById("registerName").value,document.getElementById("registerPass").value ];
+   if(checkEmpty(fields)){
+    document.getElementById("notice").innerHTML = "Please make sure all fields are filled out.";
+    return(0);
+   }
     /*
         let p2 = document.getElementById("passwordPrime").value
         if(p1 !=== p2)
@@ -93,8 +100,7 @@ function startRegister() {
         //dont go through and leave msg that Passwords don't match
         }
     */
-    // hashedPass = md5(tmpPass);
-    let tempObj = { username: document.getElementById("registerName").value, password: tmpPass }
+    let tempObj = { username: fields[0], password: fields[1] }
     let jsonload = JSON.stringify(tempObj);
     let link = apiUrl + '/Register.' + exten;
     //document.getElementById("notice").innerHTML = "test";
@@ -107,20 +113,35 @@ function startRegister() {
                 let replyObj = JSON.parse(xhr.responseText)
                 userId = replyObj.id;
                 userN = replyObj.username;
-                document.getElementById("notice").innerHTML = "User Created, Please Login.";
                 sendTo('/index.html');
+                document.getElementById("result").innerHTML = "User Created, Please Login.";
             } else if (this.status === 400) {
                 let reply = JSON.parse(xhr.responseText);
-                document.getElementById("result").innerHTML = `ERROR (${reply.error}): ${reply.message}`;
+                document.getElementById("notice").innerHTML = `ERROR (${reply.error}): ${reply.message}`;
             } else if (this.status === 500) {
                 let reply = JSON.parse(xhr.responseText);
-                document.getElementById("result").innerHTML = `SERVER ERROR (${reply.error}): ${reply.message}`;
+                document.getElementById("notice").innerHTML = `SERVER ERROR (${reply.error}): ${reply.message}`;
             }
         }
         xhr.send(jsonload); // send off the package
     } catch (error) {
         document.getElementById("notice").innerHTML = error.message
     }
+
+}
+
+/**
+ * Checks each item in the array to check which is nil
+ * 
+ * Returns true if a field is empty.
+ * @param {*} fields Array with fields
+ */
+function checkEmpty(field){
+let flag = false
+for(const elment of field){
+    if(elment == "") flag  = true;
+ }
+ return flag;
 
 }
 
