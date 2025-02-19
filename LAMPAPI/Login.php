@@ -26,7 +26,7 @@ if ($row = $result->fetch_assoc()) {
         returnWithInfo($row["Username"], $row["ID"]);
     } 
     else {
-        returnWithError("MismatchPasswordError","The input password is incorrect.", 400);e
+        returnWithError("MismatchPasswordError","The input password is incorrect.", 400);
     }
 } else {
     returnWithError("AccountNotFoundError","There is no account with this username.", 400);
