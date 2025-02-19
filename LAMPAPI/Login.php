@@ -7,8 +7,8 @@ ini_set("log_errors", 1);
 require "DBConnection.php";
 $inData = getRequestInfo();
 
-$username = $inData["username"]
-$password = $inData["password"]
+$username = $inData["username"];
+$password = $inData["password"];
 
 // Compare the password directly
 if (empty($username) || empty($password)) {
