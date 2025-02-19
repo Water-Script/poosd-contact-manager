@@ -69,7 +69,7 @@ function returnWithError($err, $message, $code) {
 function returnWithInfo($contacts) {
     header("Content-type: application/json; charset=utf-8");
     http_response_code(200);
-    echo json_encode(["contacts" = > $contacts]);
+    echo json_encode(["contacts" => $contacts]);
 }
 
 ?>
