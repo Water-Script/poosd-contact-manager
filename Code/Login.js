@@ -37,11 +37,11 @@ function startLogin() {
                 sendTo('mainPage.html');
             } else if (this.status === 400) {
                 let reply = JSON.parse(xhr.responseText);
-                document.getElementById("result").innerHTML = `ERROR (${reply.error}): ${reply.message}`;
+                document.getElementById("result").innerHTML = `${reply.message}`;
             }
             else if (this.status === 500) {
                 let reply = JSON.parse(xhr.responseText);
-                document.getElementById("result").innerHTML = `SERVER ERROR (${reply.error}): ${reply.message}`;
+                document.getElementById("result").innerHTML = `${reply.message}`;
             }
 
         }
@@ -117,10 +117,10 @@ function startRegister() {
                 document.getElementById("result").innerHTML = "User Created, Please Login.";
             } else if (this.status === 400) {
                 let reply = JSON.parse(xhr.responseText);
-                document.getElementById("notice").innerHTML = `ERROR (${reply.error}): ${reply.message}`;
+                document.getElementById("notice").innerHTML = `${reply.message}`;
             } else if (this.status === 500) {
                 let reply = JSON.parse(xhr.responseText);
-                document.getElementById("notice").innerHTML = `SERVER ERROR (${reply.error}): ${reply.message}`;
+                document.getElementById("notice").innerHTML = `${reply.message}`;
             }
         }
         xhr.send(jsonload); // send off the package
