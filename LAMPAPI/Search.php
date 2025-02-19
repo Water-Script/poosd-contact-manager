@@ -12,7 +12,7 @@ $search = $_GET["search"];
 
 switch ($type) {
     case "getAll":
-        $searchStr = "ID=", $userID;
+        $searchStr = "ID=" . $userID;
         echo $searchStr;
         break;
     case "firstname":
