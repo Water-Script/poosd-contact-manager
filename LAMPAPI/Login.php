@@ -10,12 +10,6 @@ $inData = getRequestInfo();
 $username = $inData["username"];
 $password = $inData["password"];
 
-// Compare the password directly
-if (empty($username) || empty($password)) {
-    returnWithError("EmptyFieldsError", "Both fields must be filled to login.", 400);
-    exit();
-}
-
 // Prepare SQL statement to find user by login
 $loginUser = $conn->prepare("SELECT ID,Username,Password FROM Users WHERE Username=?");
 $loginUser->bind_param("s", $username); // Bind the username value as a string
@@ -31,7 +25,7 @@ if ($row = $result->fetch_assoc()) {
 } else {
     returnWithError("AccountNotFoundError","There is no account with this username.", 400);
 }
-// Close the statement
+// Close the statements
 $loginUser->close();
 $conn->close();
 
