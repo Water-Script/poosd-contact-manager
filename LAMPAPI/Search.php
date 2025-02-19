@@ -16,19 +16,19 @@ switch ($type) {
         searchDB($conn, $searchStr);
         break;
     case "firstname":
-        $searchStr = "UserID=" . $userID . " AND " . "FirstName='" . $search . "'";
+        $searchStr = "UserID=" . $userID . " AND " . "FirstName=" . $search;
         searchDB($conn, $searchStr);
         break;
     case "lastname":
-        $searchStr = "UserID=" . $userID . " AND " . "LastName='" . $search . "'";
+        $searchStr = "UserID=" . $userID . " AND " . "LastName=" . $search;
         searchDB($conn, $searchStr);
         break;
     case "phonenumber":
-        $searchStr = "UserID=" . $userID . " AND " . "PhoneNumber='" . $search . "'";
+        $searchStr = "UserID=" . $userID . " AND " . "PhoneNumber=" . $search;
         searchDB($conn, $searchStr);
         break;
     case "email":
-        $searchStr = "UserID=" . $userID . " AND " . "Email='" . $search . "'";
+        $searchStr = "UserID=" . $userID . " AND " . "Email=" . $search;
         searchDB($conn, $searchStr);
         break;
     default:
