@@ -6,9 +6,6 @@ ini_set("log_errors", 1); // Report errors in console if it occurs
 
 require "DBConnection.php";
 
-$inData = getRequestInfo();
+echo $_GET["userID"] . $_GET["type"] . $_GET["search"];
 
-function getRequestInfo() {
-    return json_decode(file_get_contents("php://input"), true);
-}
 ?>
