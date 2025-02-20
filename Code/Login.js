@@ -6,6 +6,17 @@ let userN = "";
 
 //#endregion
 
+function createAlert(preMessage, message, type) {
+    const wrapperDiv = document.createElement("div");
+    wrapperDiv.innerHTML = [
+    `<div class="alert alert-${type} alert-dismissible" role="alert"`,
+    `   <div><strong>${preMessage}</strong> ${message}</div>`,
+    `</div>`
+    ].join("");
+
+    return wrapperDiv;
+}
+
 /**
  * Attemtps to login the user with the password and username.
  *
@@ -14,13 +25,21 @@ let userN = "";
 function startLogin() {
     userId = 0;
     userN = "";
-    document.getElementById("result").innerHTML = "";
-    let fields = [document.getElementById("loginName").value, document.getElementById("loginPass").value]
-    if(checkEmpty(fields))
-        {
-            document.getElementById("result").innerHTML = "Please make sure all fields are filled out";
-            return(0);
-        } 
+    document.getElementById("loginAlert").innerHTML = "";
+    const fields = [
+        document.getElementById("loginName").value,
+        document.getElementById("loginPass").value
+    ];
+
+    if (checkEmpty(fields)) {
+        document.getElementById("loginAlert").append(createAlert(
+            "Oops!",
+            "Please make sure all fields are filled out.",
+            "warning"
+        ));
+
+        return 0;
+    }
     let tempObj = { username: fields[0], password: fields[1]};
     let jsonload = JSON.stringify(tempObj);
     let link = apiUrl + '/Login.' + exten;
@@ -78,6 +97,7 @@ function sendTo(site) {
     window.location.href = site;
 
 }
+
 /**
  * Creates a new user, sends the username and password to API
  *
@@ -86,13 +106,24 @@ function sendTo(site) {
 function startRegister() {
     userN = "";
     userId = 0;
-    document.getElementById("notice").innerHTML ="";
+    document.getElementById("registerAlert").innerHTML = "";
     bakeCookies(); //maybe unneaded
-   let fields = [document.getElementById("registerName").value,document.getElementById("registerPass").value ];
-   if(checkEmpty(fields)){
-    document.getElementById("notice").innerHTML = "Please make sure all fields are filled out.";
-    return(0);
-   }
+    let fields = [
+        document.getElementById("registerName").value,
+        document.getElementById("registerPass").value
+    ];
+
+    if (checkEmpty(fields)) {
+        const alert = createAlert(
+            "Oops!",
+            "Please make sure all fields are filled out.",
+            "warning"
+        );
+
+        document.getElementById("registerAlert").append(alert);
+
+        return 0;
+    }
     /*
         let p2 = document.getElementById("passwordPrime").value
         if(p1 !=== p2)
@@ -132,7 +163,7 @@ function startRegister() {
 
 /**
  * Checks each item in the array to check which is nil
- * 
+ *
  * Returns true if a field is empty.
  * @param {*} fields Array with fields
  */
