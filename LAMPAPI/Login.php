@@ -20,10 +20,10 @@ if ($loginUser->execute()) {
             returnWithInfo($row["Username"], $row["ID"]);
         } 
         else {
-            returnWithError("MismatchPasswordError","The input password is incorrect.", 400);
+            returnWithError("MismatchPasswordError", "The input password is incorrect.", 400);
         }
     } else {
-        returnWithError("AccountNotFoundError","There is no account with this username.", 400);
+        returnWithError("AccountNotFoundError", "There is no account with this username.", 400);
     }
     // Close the statements
     $loginUser->close();

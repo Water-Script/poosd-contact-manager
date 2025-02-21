@@ -48,7 +48,7 @@ function searchDB($conn, $searchStr) {
             returnWithInfo($contacts);
         }
         else {
-            returnWithError("ContactNotFoundError", "The requested contact could not be found.", 404);
+            returnWithError("ContactNotFoundError", "The requested contact(s) could not be found.", 404);
         }
     }
     else {
