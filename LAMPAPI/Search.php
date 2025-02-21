@@ -37,7 +37,7 @@ switch ($type) {
 }
 
 function searchDB($conn, $searchStr) {
-    $query = "SELECT FirstName, LastName, PhoneNumber, Email FROM Contacts WHERE " . $searchStr;
+    $query = "SELECT ID, FirstName, LastName, PhoneNumber, Email FROM Contacts WHERE " . $searchStr;
     $result = $conn->query($query);
     if ($result) {
         if ($result->num_rows > 0) {
