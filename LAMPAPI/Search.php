@@ -32,7 +32,7 @@ switch ($type) {
         searchDB($conn, $searchStr);
         break;
     default:
-        returnWithError("IncorrectSearchTypeError", "The chosen search type is invalid.", 400);
+        returnWithError("InvalidSearchTypeError", "The chosen search type is invalid.", 400);
         break;
 }
 
