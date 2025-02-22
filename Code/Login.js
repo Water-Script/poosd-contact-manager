@@ -21,7 +21,8 @@ function startLogin() {
             document.getElementById("result").innerHTML = "Please make sure all fields are filled out";
             return(0);
         } 
-    let tempObj = { username: fields[0], password: fields[1]};
+    let tmpPass = md5(fields[1]);
+    let tempObj = { username: fields[0], password: tmpPass};
     let jsonload = JSON.stringify(tempObj);
     let link = apiUrl + '/Login.' + exten;
     let xhr = new XMLHttpRequest();
@@ -94,13 +95,15 @@ function startRegister() {
     return(0);
    }
     /*
-        let p2 = document.getElementById("passwordPrime").value
+        let chekPass = document.getElementById("passwordPrime").value
         if(p1 !=== p2)
         {
-        //dont go through and leave msg that Passwords don't match
+        document.getElementById("notice").innerHTML = "Passwords do not match!";
+        return(0);
         }
     */
-    let tempObj = { username: fields[0], password: fields[1] }
+    let tmpPass = md5(fields[1])
+    let tempObj = { username: fields[0], password: tmpPass }
     let jsonload = JSON.stringify(tempObj);
     let link = apiUrl + '/Register.' + exten;
     //document.getElementById("notice").innerHTML = "test";
