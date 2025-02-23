@@ -21,9 +21,11 @@ if ($loginUser->execute()) {
         } 
         else {
             returnWithError("MismatchPasswordError", "The input password is incorrect.", 400);
+            exit();
         }
     } else {
         returnWithError("AccountNotFoundError", "There is no account with this username.", 400);
+        exit(); 
     }
     // Close the statements
     $loginUser->close();
