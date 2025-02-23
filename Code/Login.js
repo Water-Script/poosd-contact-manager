@@ -92,7 +92,7 @@ function startLogin() {
         xhr.onreadystatechange = () => {
             if (xhr.responseText === "") {
                 loginAlert.append(createAlert(
-                    "<strong>Drat!<strong> It seems our servers are having some issues right now. Please try again in a bit.",
+                    "<strong>Drat!</strong> It seems our servers are having some issues right now. Please try again in a bit.",
                     "danger"
                 ));
                 return;
