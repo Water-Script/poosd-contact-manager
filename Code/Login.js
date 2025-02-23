@@ -9,7 +9,7 @@ let userN = "";
 function createAlert(message, type) {
     const wrapperDiv = document.createElement("div");
     wrapperDiv.innerHTML = [
-    `<div class="alert alert-${type} alert-dismissible" role="alert"`,
+    `<div class="alert alert-${type} alert-dismissible" role="alert">`,
     `   <div>${message}</div>`,
     `   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`,
     `</div>`
@@ -87,9 +87,17 @@ function startLogin() {
     const loginAlert = document.getElementById("loginAlert");
     let xhr = new XMLHttpRequest();
     //  xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    xhr.open("POST", requestUrl);
     try {
-        xhr.open("POST", requestUrl, true);
         xhr.onreadystatechange = () => {
+            if (reply.responseText === "") {
+                loginAlert.append(createAlert(
+                    "<strong>Drat!<strong> It seems our servers are having some issues right now. Please try again in a bit.",
+                    "danger"
+                ));
+                return;
+            }
+
             const reply = JSON.parse(xhr.responseText);
 
             if (xhr.readyState === 4 && xhr.status === 200) {
