@@ -15,14 +15,9 @@ $lastName = $inData["lastName"];
 $phoneNumber = $inData["phoneNumber"];
 $email = $inData["email"];
 
-if (empty($userId)) {
-    returnWithError("NoUserIDError", "There was no user selected for this contact.", 400);
+if (empty($userId) || empty($contactId)) {
+    returnWithError("MalformedRequestError", "The user and contact IDs must be valid numbers.", 400);
     exit();
-}
-
-if (empty($contactId)) {
-        returnWithError("NoContactIDError", "There was no contact selected.", 400);
-        exit();
 }
 
 $checkContact = $conn->prepare("SELECT * FROM Contacts WHERE ID=?");
@@ -52,9 +47,10 @@ if ($checkContact->execute()) {
             $updateContact = $conn->prepare("UPDATE Contacts SET " . $stmt . " WHERE ID=?");
             $updateContact->bind_param("ssssi", $firstName, $lastName, $phoneNumber, $email, $contactId);
             if ($updateContact->execute()) {
-                $result = $updateContact->get_result();
-                if ($row = $result->fetch_assoc()) {
+                if ($updateContact->affected_rows > 0) {
                     returnWithInfo($userId, $contactId, $firstName, $lastName, $email, $phoneNumber);
+                } else {
+                    returnWithError("DatabaseError", "Something went wrong when updating the contact.", 500);
                 }
             }
         }
