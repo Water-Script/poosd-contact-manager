@@ -32,12 +32,12 @@ switch ($type) {
         searchDB($conn, $searchStr);
         break;
     default:
-        returnWithError("IncorrectSearchTypeError", "The chosen search type is invalid.", 400);
+        returnWithError("InvalidSearchTypeError", "The chosen search type is invalid.", 400);
         break;
 }
 
 function searchDB($conn, $searchStr) {
-    $query = "SELECT FirstName, LastName, PhoneNumber, Email FROM Contacts WHERE " . $searchStr;
+    $query = "SELECT ID, FirstName, LastName, PhoneNumber, Email FROM Contacts WHERE " . $searchStr;
     $result = $conn->query($query);
     if ($result) {
         if ($result->num_rows > 0) {
@@ -48,7 +48,7 @@ function searchDB($conn, $searchStr) {
             returnWithInfo($contacts);
         }
         else {
-            returnWithError("ContactNotFoundError", "The requested contact could not be found.", 404);
+            returnWithError("ContactNotFoundError", "The requested contact(s) could not be found.", 404);
         }
     }
     else {
@@ -71,5 +71,4 @@ function returnWithInfo($contacts) {
     http_response_code(200);
     echo json_encode(["contacts" => $contacts]);
 }
-
 ?>

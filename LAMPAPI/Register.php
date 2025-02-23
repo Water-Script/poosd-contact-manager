@@ -15,11 +15,11 @@ if ($checkUser->execute()) {
     $result = $checkUser->get_result();  // Check if a user exists
 
     if ($row = $result->fetch_assoc()) {
-        returnWithError("ExistingUserError", "An account already exists with that username.", 400);
+        returnWithError("ExistingUserError", "This username is taken. Please try another.", 400);
         exit();
     }
 
-    if (empty($username) || empty($password)) {
+    if (!isset($username) || trim($username) === "" || !isset($password) || trim($password) === "") {
         returnWithError("MalformedRequestError", "All fields must be filled.", 400);
         exit();
     }  // Validate fields not being empty
