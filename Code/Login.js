@@ -1,58 +1,36 @@
 //#region Constant and Globals
-const apiUrl = 'http://ingerberwetrust.com/LAMPAPI'; //api
-const exten = 'php'; //extension for the api
+const apiUrl = "http://ingerberwetrust.com/LAMPAPI"; //api
+const exten = "php"; //extension for the api
 let userId = 0;
 let userN = "";
 
 //#endregion
 
+function createAlert(message, type) {
+    const wrapperDiv = document.createElement("div");
+    wrapperDiv.innerHTML = [
+    `<div class="alert alert-${type} alert-dismissible" role="alert"`,
+    `   <div>${message}</div>`,
+    `   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`,
+    `</div>`
+    ].join("");
+
+    return wrapperDiv;
+}
+
 /**
- * Attemtps to login the user with the password and username.
+ * Checks each item in the array to check which is nil
  *
- * Sends a JSON package with the username 'login' and password 'password' in a json format
+ * Returns true if a field is empty.
+ * @param {*} fields Array with fields
  */
-function startLogin() {
-    userId = 0;
-    userN = "";
-    document.getElementById("result").innerHTML = "";
-    let fields = [document.getElementById("loginName").value, document.getElementById("loginPass").value]
-    if(checkEmpty(fields))
-        {
-            document.getElementById("result").innerHTML = "Please make sure all fields are filled out";
-            return(0);
-        } 
-    let tmpPass = md5(fields[1]);
-    let tempObj = { username: fields[0], password: tmpPass};
-    let jsonload = JSON.stringify(tempObj);
-    let link = apiUrl + '/Login.' + exten;
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", link, true);
-  //  xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-    try {
-        xhr.onreadystatechange = function () {
-            if (this.readyState === 4 && this.status === 200) {
-                let replyObj = JSON.parse(xhr.responseText);
-                userId = replyObj.id;
-                userN = replyObj.username;
-                bakeCookies(); // possibly unneeded
-                sendTo('mainPage.html');
-            } else if (this.status === 400) {
-                let reply = JSON.parse(xhr.responseText);
-                document.getElementById("result").innerHTML = `${reply.message}`;
-            }
-            else if (this.status === 500) {
-                let reply = JSON.parse(xhr.responseText);
-                document.getElementById("result").innerHTML = `${reply.message}`;
-            }
-
+function checkEmpty(field) {
+    for (const elment of field) {
+        if (elment === "") {
+            return true;
         }
-        xhr.send(jsonload);
-    } catch (error) {
-        document.getElementById("result").innerHTML = error.message
     }
-
-
-
+    return false;
 }
 
 /**
@@ -66,7 +44,6 @@ function bakeCookies() {
     let date = new Date();
     date.setTime(date.getTime() + (30 * 60 * 1000));
     document.cookie = "username=" + userN + "|userid=" + userId + "expires=" + date.toGMTString();
-
 }
 
 /**
@@ -75,10 +52,89 @@ function bakeCookies() {
  * @param {String} site html location
  */
 function sendTo(site) {
-
     window.location.href = site;
-
 }
+
+/**
+ * Attemtps to login the user with the password and username.
+ *
+ * Sends a JSON package with the username "login" and password "password" in a json format
+ */
+function startLogin() {
+    userId = 0;
+    userN = "";
+    document.getElementById("loginAlert").innerHTML = "";
+    const fields = [
+        document.getElementById("loginName").value,
+        document.getElementById("loginPass").value
+    ];
+
+    if (checkEmpty(fields)) {
+        document.getElementById("loginAlert").append(createAlert(
+            "<strong>Oops!</strong> Please make sure all fields are filled out.",
+            "warning"
+        ));
+
+        return 0;
+    }
+
+    const jsonload = JSON.stringify({
+        username: fields[0],
+        password: md5(fields[1])
+    });
+    // const link = apiUrl + "/Login." + exten;
+    const requestUrl = `${apiUrl}/Login.${exten}`;
+    const loginAlert = document.getElementById("loginAlert");
+    let xhr = new XMLHttpRequest();
+    //  xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    try {
+        xhr.open("POST", requestUrl, true);
+        xhr.onreadystatechange = () => {
+            const reply = JSON.parse(xhr.responseText);
+
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                userId = reply.id;
+                userN = reply.username;
+                bakeCookies(); // possibly unneeded
+                sendTo("mainPage.html");
+            } else if (xhr.status === 400) {
+                switch (reply.error) {
+                    case "AccountNotFoundError":
+                    case "MismatchPasswordError":
+                        loginAlert.append(
+                            createAlert(`<strong>Oops!</strong> ${reply.message}`, "warning")
+                        );
+                        break;
+                    default:
+                        loginAlert.append(createAlert(
+                            "<strong>Uh oh!<strong> Something seems to be wrong with the server right now. Please try again at another time",
+                            "danger"
+                        ));
+                }
+            } else if (xhr.status === 500) {
+                console.error(reply);
+                loginAlert.append(createAlert(
+                    "<strong>Uh oh!</strong> The server seems to be having problems right now. Please try again in a few minutes.",
+                    "danger"
+                ));
+            } else {
+                console.error(reply);
+                loginAlert.append(createAlert(
+                    "<strong>Sorry!</strong> It seems like something isn't working right...",
+                    "danger"
+                ));
+            }
+        }
+        xhr.send(jsonload);
+    } catch (error) {
+        console.error(error);
+        loginAlert.append(createAlert(
+            "<strong>Yikes!</strong> An error has been encountered! Please try again.",
+            "danger"
+        ));
+    }
+}
+
 /**
  * Creates a new user, sends the username and password to API
  *
@@ -87,13 +143,21 @@ function sendTo(site) {
 function startRegister() {
     userN = "";
     userId = 0;
-    document.getElementById("notice").innerHTML ="";
+    document.getElementById("registerAlert").innerHTML = "";
     bakeCookies(); //maybe unneaded
-   let fields = [document.getElementById("registerName").value,document.getElementById("registerPass").value ];
-   if(checkEmpty(fields)){
-    document.getElementById("notice").innerHTML = "Please make sure all fields are filled out.";
-    return(0);
-   }
+    let fields = [
+        document.getElementById("registerName").value,
+        document.getElementById("registerPass").value
+    ];
+
+    if (checkEmpty(fields)) {
+        document.getElementById("registerAlert").append(createAlert(
+            "<strong>Oops!</strong> Please make sure all fields are filled out.",
+            "warning"
+        ));
+
+        return 0;
+    }
     /*
         let chekPass = document.getElementById("passwordPrime").value
         if(p1 !=== p2)
@@ -102,49 +166,62 @@ function startRegister() {
         return(0);
         }
     */
-    let tmpPass = md5(fields[1])
-    let tempObj = { username: fields[0], password: tmpPass }
+    let tempObj = {
+        username: fields[0],
+        password: md5(fields[1])
+    }
     let jsonload = JSON.stringify(tempObj);
-    let link = apiUrl + '/Register.' + exten;
-    //document.getElementById("notice").innerHTML = "test";
+    let link = `${apiUrl}/Register.${exten}`;
+    const registerAlert = document.getElementById("registerAlert");
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", link, true)
-    //document.getElementById("notice").innerHTML = "Going to send";
     try {
-        xhr.onreadystatechange = function () {
-            if (this.readyState === 4 && this.status === 201) {
-                let replyObj = JSON.parse(xhr.responseText)
-                userId = replyObj.id;
-                userN = replyObj.username;
-                sendTo('/index.html');
-                document.getElementById("result").innerHTML = "User Created, Please Login.";
-            } else if (this.status === 400) {
-                let reply = JSON.parse(xhr.responseText);
-                document.getElementById("notice").innerHTML = `${reply.message}`;
-            } else if (this.status === 500) {
-                let reply = JSON.parse(xhr.responseText);
-                document.getElementById("notice").innerHTML = `${reply.message}`;
+        xhr.open("POST", link, true);
+        xhr.onreadystatechange = () => {
+            let reply = JSON.parse(xhr.responseText);
+
+            if (xhr.readyState === 4 && xhr.status === 201) {
+                userId = reply.id;
+                userN = reply.username;
+                registerAlert.append(createAlert(
+                    "<strong>Hooray!</strong> User Created, please Login.",
+                    "success"
+                ));
+                sendTo("/index.html");
+            } else if (xhr.status === 400) {
+                registerAlert.append(
+                    ((reply.error === "ExistingUserError")
+                        ? createAlert(`<strong>Woops!</strong> ${reply.message}`, "warning")
+                        : createAlert(
+                            [
+                                "<strong>Embarrassing!</strong> ",
+                                "Something isn't quite right on our end! ",
+                                "Please try again."
+                            ].join(""),
+                            "danger"
+                        )
+                    )
+                );
+            } else if (xhr.status === 500) {
+                console.error(reply);
+                registerAlert.append(createAlert(
+                    "<strong>Uh oh!</strong> The server seems to be having problems right now. Please try again in a few minutes.",
+                    "danger"
+                ));
+            } else {
+                console.error(reply);
+                registerAlert.append(createAlert(
+                    "<strong>Sorry!</strong> It seems like something isn't working right...",
+                    "danger"
+                ));
             }
         }
         xhr.send(jsonload); // send off the package
     } catch (error) {
-        document.getElementById("notice").innerHTML = error.message
+        console.error(error);
+        registerAlert.append(createAlert(
+            "<strong>Yikes!</strong> An error has been encountered! Please try again.",
+            "danger"
+        ));
     }
 
 }
-
-/**
- * Checks each item in the array to check which is nil
- * 
- * Returns true if a field is empty.
- * @param {*} fields Array with fields
- */
-function checkEmpty(field){
-let flag = false
-for(const elment of field){
-    if(elment == "") flag  = true;
- }
- return flag;
-
-}
-
