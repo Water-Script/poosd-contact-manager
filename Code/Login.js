@@ -80,7 +80,7 @@ function startLogin() {
 
     const jsonload = JSON.stringify({
         username: fields[0],
-        password: fields[1]
+        password: md5(fields[1])
     });
     // const link = apiUrl + "/Login." + exten;
     const requestUrl = `${apiUrl}/Login.${exten}`;
@@ -167,7 +167,7 @@ function startRegister() {
     */
     let tempObj = {
         username: fields[0],
-        password: fields[1]
+        password: md5(fields[1])
     }
     let jsonload = JSON.stringify(tempObj);
     let link = `${apiUrl}/Register.${exten}`;
