@@ -64,6 +64,16 @@ function getRequestInfo() {
     return json_decode(file_get_contents("php://input"), true);
 }
 
+function returnWithError($err, $message, $code) {
+    $returnArray = array(
+        "error" => $err,
+        "message" => $message
+    );
+    header("Content-type: application/json; charset=utf-8");
+    http_response_code($code);
+    echo json_encode($returnArray);
+}
+
 function returnWithInfo($userId, $contactId, $firstName, $lastName, $email, $phoneNumber) {
     $returnArray = array(
         "userId" => $userId,
@@ -75,16 +85,6 @@ function returnWithInfo($userId, $contactId, $firstName, $lastName, $email, $pho
     );
     header("Content-type: application/json; charset=utf-8");
     http_response_code(200);
-    echo json_encode($returnArray);
-}
-
-function returnWithError($err, $message, $code) {
-    $returnArray = array(
-        "error" => $err,
-        "message" => $message
-    );
-    header("Content-type: application/json; charset=utf-8");
-    http_response_code($code);
     echo json_encode($returnArray);
 }
 
