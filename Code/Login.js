@@ -159,10 +159,11 @@ function startRegister() {
         return 0;
     }
     /*
-        let p2 = document.getElementById("passwordPrime").value
+        let chekPass = document.getElementById("passwordPrime").value
         if(p1 !=== p2)
         {
-        //dont go through and leave msg that Passwords don't match
+        document.getElementById("notice").innerHTML = "Passwords do not match!";
+        return(0);
         }
     */
     let tempObj = {
