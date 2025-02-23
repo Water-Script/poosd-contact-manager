@@ -90,11 +90,14 @@ function startLogin() {
     xhr.open("POST", requestUrl);
     try {
         xhr.onreadystatechange = () => {
+            // I think that xhr runs this for several different events, so we
+            // need to make sure we actually have a response.
             if (xhr.responseText === "") {
-                loginAlert.append(createAlert(
-                    "<strong>Drat!</strong> It seems our servers are having some issues right now. Please try again in a bit.",
-                    "danger"
-                ));
+                // loginAlert.append(createAlert(
+                //     "<strong>Drat!</strong> It seems our servers are having some issues right now. Please try again in a bit.",
+                //     "danger"
+                // ));
+
                 return;
             }
 
@@ -182,9 +185,13 @@ function startRegister() {
     let link = `${apiUrl}/Register.${exten}`;
     const registerAlert = document.getElementById("registerAlert");
     let xhr = new XMLHttpRequest();
+    xhr.open("POST", link, true);
     try {
-        xhr.open("POST", link, true);
         xhr.onreadystatechange = () => {
+            if (xhr.responseText === "") {
+                return;
+            }
+
             let reply = JSON.parse(xhr.responseText);
 
             if (xhr.readyState === 4 && xhr.status === 201) {
