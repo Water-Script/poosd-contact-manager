@@ -92,7 +92,7 @@ function startLogin() {
         xhr.onreadystatechange = () => {
             // I think that xhr runs this for several different events, so we
             // need to make sure we actually have a response.
-            if (xhr.responseText === "") {
+            if (xhr.readyState !== 4 || xhr.responseText === "") {
                 // loginAlert.append(createAlert(
                 //     "<strong>Drat!</strong> It seems our servers are having some issues right now. Please try again in a bit.",
                 //     "danger"
@@ -188,19 +188,19 @@ function startRegister() {
     xhr.open("POST", link, true);
     try {
         xhr.onreadystatechange = () => {
-            if (xhr.responseText === "") {
+            if (xhr.readyState !== 4 || xhr.responseText === "") {
                 return;
             }
 
             let reply = JSON.parse(xhr.responseText);
 
-            if (xhr.readyState === 4 && xhr.status === 201) {
+            if (xhr.status === 201) {
                 userId = reply.id;
                 userN = reply.username;
-                registerAlert.append(createAlert(
+                registerAlert.innerHTML = createAlert(
                     "<strong>Hooray!</strong> User Created, please Login.",
                     "success"
-                ));
+                );
                 sendTo("/index.html");
             } else if (xhr.status === 400) {
                 registerAlert.append(
