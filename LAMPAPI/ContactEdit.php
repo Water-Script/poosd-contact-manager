@@ -20,21 +20,21 @@ if (empty($userId) || empty($contactId)) {
     exit();
 }
 
-$checkContact = $conn->prepare("SELECT * FROM Contacts WHERE ID=?");
+$checkContact = $conn->prepare("SELECT * FROM Contacts WHERE UserID=?");
 $checkContact->bind_param("i", $userId);
 if ($checkContact->execute()) {
     $result = $checkContact->get_result();
     if ($row = $result->fetch_assoc()) {
-        if (empty($firstName) || $firstName === " ") {
+        if (!isset($firstName) || trim($firstName) === "") {
             $firstName = $row["FirstName"];
         }
-        if (empty($lastName) || $lastName === " ") {
+        if (!isset($lastName) || trim($lastName) === "") {
             $lastName = $row["LastName"];
         }
-        if (empty($phoneNumber) || $phoneNumber === " ") {
+        if (!isset($phoneNumber) || trim($phoneNumber) === "") {
             $phoneNumber = $row["PhoneNumber"];
         }
-        if (empty($email) || $email === " ") {
+        if (!isset($email) || trim($email) === "") {
             $email = $row["Email"];
         }
 

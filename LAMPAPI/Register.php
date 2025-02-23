@@ -19,7 +19,7 @@ if ($checkUser->execute()) {
         exit();
     }
 
-    if (empty($username) || empty($password)) {
+    if (!isset($username) || trim($username) === "" || !isset($password) || trim($password) === "") {
         returnWithError("MalformedRequestError", "All fields must be filled.", 400);
         exit();
     }  // Validate fields not being empty
