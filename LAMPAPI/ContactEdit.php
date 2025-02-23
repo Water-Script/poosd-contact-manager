@@ -52,7 +52,7 @@ if ($checkContact->execute()) {
             $updateContact = $conn->prepare("UPDATE Contacts SET " . $stmt . " WHERE ID=?");
             $updateContact->bind_param("ssssi", $firstName, $lastName, $phoneNumber, $email, $contactId);
             if ($updateContact->execute()) {
-                $result = $checkContact->get_result();
+                $result = $updateContact->get_result();
                 if ($row = $result->fetch_assoc()) {
                     returnWithInfo($userId, $contactId, $firstName, $lastName, $email, $phoneNumber);
                 }
