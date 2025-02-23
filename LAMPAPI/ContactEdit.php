@@ -48,7 +48,6 @@ if ($checkContact->execute()) {
             exit();
         }
         else {
-            $checkContact->close();
             $stmt = "FirstName=?, LastName=?, PhoneNumber=?, Email=?";
             $updateContact = $conn->prepare("UPDATE Contacts SET " . $stmt . " WHERE ID=?");
             $updateContact->bind_param("ssssi", $firstName, $lastName, $phoneNumber, $email, $contactId);
