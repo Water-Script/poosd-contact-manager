@@ -9,7 +9,7 @@ let userN = "";
 function createAlert(message, type) {
     const wrapperDiv = document.createElement("div");
     wrapperDiv.innerHTML = [
-    `<div class="alert alert-${type} alert-dismissible fade show" role="alert"`,
+    `<div class="alert alert-${type} alert-dismissible" role="alert"`,
     `   <div>${message}</div>`,
     `   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`,
     `</div>`
