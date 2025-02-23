@@ -12,8 +12,8 @@ $userId = $inData["userId"];
 $contactId = $inData["contactId"];
 $firstName = $inData["firstName"];
 $lastName = $inData["lastName"];
-$email = $inData["email"];
 $phoneNumber = $inData["phoneNumber"];
+$email = $inData["email"];
 
 if (empty($userId)) {
     returnWithError("NoUserIDError", "There was no user selected for this contact.", 400);
@@ -36,11 +36,11 @@ if ($checkContact->execute()) {
         if (empty($lastName) || $lastName === " ") {
             $lastName = $row["LastName"];
         }
-        if (empty($email) || $email === " ") {
-            $email = $row["Email"];
-        }
         if (empty($phoneNumber) || $phoneNumber === " ") {
             $phoneNumber = $row["PhoneNumber"];
+        }
+        if (empty($email) || $email === " ") {
+            $email = $row["Email"];
         }
 
         if ($firstName === $row["FirstName"] && $lastName === $row["LastName"] && $email === $row["Email"] && $phoneNumber === $row["PhoneNumber"]) {
@@ -49,7 +49,7 @@ if ($checkContact->execute()) {
         }
         else {
             $checkContact->close();
-            $stmt = "FirstName = '" . $firstName . "', LastName = '" . $lastName . "', Email = '" . $email . "', PhoneNumber = '" . $phoneNumber . "' WHERE ID = " . $contactId;
+            $stmt = "FirstName = '" . $firstName . "', LastName = '" . $lastName . "', PhoneNumber = '" . $phoneNumber . "', Email = '" . $email . "' WHERE ID = " . $contactId;
             $updateContact = $conn->prepare("UPDATE Contacts SET ?");
             $updateContact->bind_param("s", $stmt);
             if ($updateContact->execute()) {
