@@ -20,8 +20,8 @@ if (empty($userId) || empty($contactId)) {
     exit();
 }
 
-$checkContact = $conn->prepare("SELECT * FROM Contacts WHERE UserID=?");
-$checkContact->bind_param("i", $userId);
+$checkContact = $conn->prepare("SELECT * FROM Contacts WHERE UserID=? AND ID=?");
+$checkContact->bind_param("i", $userId, $contactId);
 if ($checkContact->execute()) {
     $result = $checkContact->get_result();
     if ($row = $result->fetch_assoc()) {
@@ -43,8 +43,7 @@ if ($checkContact->execute()) {
             exit();
         }
         else {
-            $stmt = "FirstName=?, LastName=?, PhoneNumber=?, Email=?";
-            $updateContact = $conn->prepare("UPDATE Contacts SET " . $stmt . " WHERE ID=?");
+            $updateContact = $conn->prepare("UPDATE Contacts SET FirstName=?, LastName=?, PhoneNumber=?, Email=? WHERE ID=?");
             $updateContact->bind_param("ssssi", $firstName, $lastName, $phoneNumber, $email, $contactId);
             if ($updateContact->execute()) {
                 if ($updateContact->affected_rows > 0) {
