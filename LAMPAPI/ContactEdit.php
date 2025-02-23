@@ -21,7 +21,7 @@ if (empty($userId) || empty($contactId)) {
 }
 
 $checkContact = $conn->prepare("SELECT * FROM Contacts WHERE UserID=? AND ID=?");
-$checkContact->bind_param("i", $userId, $contactId);
+$checkContact->bind_param("ii", $userId, $contactId);
 if ($checkContact->execute()) {
     $result = $checkContact->get_result();
     if ($row = $result->fetch_assoc()) {
