@@ -1,5 +1,5 @@
 const apiUrl = "http://ingerberwetrust.com/LAMPAPI"; //api
-let userId = 0;
+let userId = cookie.userId;
 let username = "";
 const exten = "php"; //extension for the api
 
