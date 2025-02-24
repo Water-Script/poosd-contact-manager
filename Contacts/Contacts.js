@@ -13,18 +13,15 @@ window.onload = function () {
 };
 
 function getUserIdFromCookies() {
-  // obtain cookies
-  let cookies = document.cookie;
-
-  // look for match
-  let match = cookies.match(/userid=([^;|]+)/);
-
-  // if match is found, return that user id value
-  if (match) {
-    return match[1];
-  } else {
-    return null;
-  }
+  cookie = document.cookie;
+  //cookies are seperated by a | then an = 
+  let arrSplit = cookie.split("|");
+  //we know that split 0 is username and split 1 is userid
+  let tmp = arrSplit[0].trim();
+  const username = tmp[1];
+  tmp = arrSplit[1].trim();
+  return tmp[1];
+  } 
 }
 function searchDB(userId, type) {
   let search = [
