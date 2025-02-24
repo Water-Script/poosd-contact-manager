@@ -218,10 +218,10 @@ function updateTable(contacts) {
     const row = document.createElement("tr");
 
     row.innerHTML = `
-            <td>${contact.firstName}</td>
-            <td>${contact.lastName}</td>
-            <td>${contact.phoneNumber}</td>
-            <td>${contact.email}</td>
+            <td>${contact.FirstName}</td>
+            <td>${contact.LastName}</td>
+            <td>${contact.PhoneNumber}</td>
+            <td>${contact.Email}</td>
         `;
 
     tableBody.appendChild(row);
