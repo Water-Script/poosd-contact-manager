@@ -9,19 +9,20 @@ function createAlert(message, type) {
     `<div class="alert alert-${type} alert-dismissible" role="alert">`,
     `   <div>${message}</div>`,
     `   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`,
-    `</div>`
+    `</div>`,
   ].join("");
 
   return wrapperDiv;
 }
 
-window.onload = function() {
+window.onload = function () {
   const cookie = parseCookie(document.cookie);
   //getUserIdFromCookies();
-  document.getElementById("errorMessage").insertAdjacentHTML(createAlert(
-    `The user id is: ${cookie.userId}`,
-    "warning"
-  ));
+  document
+    .getElementById("errorMessage")
+    .insertAdjacentHTML(
+      createAlert(`The user id is: ${cookie.userId}`, "warning")
+    );
 
   if (userId === null || Date.parse(cookie.expires) > Date.now()) {
     sendTo("/index.html");
@@ -33,7 +34,7 @@ window.onload = function() {
 /*
  * Parse the cookie and return an object consisting of they keys and their
  * stringified values.
-*/
+ */
 function parseCookie() {
   const cookie = document.cookie;
   const cookieTokens = cookie.split(";");
@@ -86,10 +87,11 @@ function addContact() {
   ];
 
   if (checkEmpty(fields)) {
-    document.getElementById("errorMessage").innerHTML = createAlert(
-      "Please make sure all fields are filled out.",
-      "warning"
-    );
+    document
+      .getElementById("errorMessage")
+      .append(
+        createAlert("Please make sure all fields are filled out.", "warning")
+      );
     return 0;
   }
 
@@ -153,20 +155,47 @@ function updateTable(contacts) {
 }
 
 function addContactToTable(firstName, lastName, phoneNumber, email) {
-  const table = document
-    .getElementById("contactsTable")
-    .getElementsByTagName("tbody")[0];
+  const tableBody = document.querySelector("#table tbody");
+  const newRow = document.createElement("tr");
+  const firstNameCell = document.createElement("td");
+  nameCell.innerText = firstName;
+  const lastNameCell = document.createElement("td");
+  lastNameCell.innerText = lastName;
+  const phoneNumberCell = document.createElement("td");
+  phoneNumberCell.innerText = phoneNumber;
+  const emailCell = document.createElement("td");
+  emailCell.innerText = email;
+  const funcCell = document.createElement("td");
 
-  const row = table.insertRow();
-  row.insertCell(0).innerText = firstName;
-  row.insertCell(1).innerText = lastName;
-  row.insertCell(2).innerText = phoneNumber;
-  row.insertCell(3).innerText = email;
+  const editButton = document.createElement("button");
+  editButton.innerText = "Edit";
+  editButton.classList.add("btn", "btn-warning", "mr-1");
+  editButton.onclick = function () {
+    editContact();
+  };
+
+  const deleteButton = document.createElement("button");
+  deleteButton.innerText = "Delete";
+  deleteButton.classList.add("btn", "btn-danger");
+  deleteButton.onclick = function () {
+    deleteContact(deleteButton);
+  };
+
+  funcCell.appendChild(editButton);
+  funcCell.appendChild(deleteButton);
+
+  newRow.appendChild(firstNameCell);
+  newRow.appendChild(lastNameCell);
+  newRow.appendChild(phoneNumberCell);
+  newRow.appendChild(emailCell);
+  newRow.appendChild(funcCell);
+
+  tableBody.appendChild(newRow);
 }
 
 function displayError(message) {
   const errorDiv = document.getElementById("errorMessage");
-  errorDiv.innerHTML = createAlert(message, "warning");
+  errorDiv.append(createAlert(message, "warning"));
 }
 
 function clearErrorMessage() {
