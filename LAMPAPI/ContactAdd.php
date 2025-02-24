@@ -9,23 +9,38 @@ require "DBConnection.php";
 $inData = getRequestInfo();
 
 // Ensure required fields exist
-if (!isset($inData["userId"], $inData["firstName"], $inData["lastName"], $inData["phoneNumber"], $inData["email"])) {
-    returnWithError("MissingFieldsError", "Required fields are missing.", 400);
+if (!isset($inData["userId"], $inData["firstName"]) && (!isset($inData["phoneNumber"]) || !isset($inData["email"]))) {
+    returnWithError("MissingFieldsError", "Required fields are missing. (First Name and (Phone Number or Email))", 400);
     exit();
 }
 
 $userId = $inData["userId"];
 $firstName = $inData["firstName"];
-$lastName = $inData["lastName"];
-$phoneNumber = $inData["phoneNumber"];
-$email = $inData["email"];
+
+if (!isset($inData["lastName"]) || trim($inData["lastName"] === ""))
+    $lastName = "";
+else
+    $lastName = $inData["lastName"];
+
+if (!isset($inData["phoneNumber"]) || trim($inData["phoneNumber"]) === "")
+    $phoneNumber = "";
+else
+    $phoneNumber = $inData["phoneNumber"];
+
+if (!isset($inData["email"]) || trim($inData["email"]) === "")
+    $email = "";
+else
+    $email = $inData["email"];
 
 // Prepare SQL query to insert the contact
 $stmt = $conn->prepare("INSERT INTO Contacts (UserID, FirstName, LastName, PhoneNumber, Email) VALUES (?, ?, ?, ?, ?)");
 $stmt->bind_param("issss", $userId, $firstName, $lastName, $phoneNumber, $email);
 
 if ($stmt->execute()) {
-    returnWithInfo("ContactAddedSuccess", "The contact has been added successfully.");
+    $result = $stmt->get_result();
+    if ($row = $result->fetch_assoc()) {
+        returnWithInfo($row["ID"], $row["FirstName"], $row["LastName"], $row["PhoneNumber"], $row["Email"]);
+    }
 } else {
     returnWithError("DatabaseError", "Failed to add the contact.", 500);
 }
@@ -45,8 +60,14 @@ function returnWithError($err, $message, $code) {
     echo json_encode($returnArray);
 }
 
-function returnWithInfo($success, $message) {
-    $returnArray = array("success" => $success, "message" => $message);
+function returnWithInfo($id, $firstName, $lastName, $phoneNumber, $email) {
+    $returnArray = array(
+        "contactId": $id,
+        "firstName": $firstName,
+        "lastName": $lastName,
+        "phoneNumber": $phoneNumber,
+        "email": $email
+    );
     header("Content-type: application/json; charset=utf-8");
     http_response_code(200);
     echo json_encode($returnArray);
