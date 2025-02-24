@@ -80,6 +80,11 @@ function searchDB(userId, type) {
       });
   }
 }
+function isPhoneNumber(value) {
+  // Check if the value is a string and contains exactly 10 digits
+  const regex = /^\d{10}$/;
+  return regex.test(value);
+}
 
 function addContact() {
   let fields = [
@@ -94,6 +99,14 @@ function addContact() {
       .getElementById("errorMessage")
       .replaceChildren(
         createAlert("Please make sure all fields are filled out.", "warning")
+      );
+    return 0;
+  }
+  if (!isPhoneNumber(fields[2])) {
+    document
+      .getElementById("errorMessage")
+      .replaceChildren(
+        createAlert("A phone number must be 10 digits", "warning")
       );
     return 0;
   }
