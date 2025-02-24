@@ -37,7 +37,7 @@ window.onload = function () {
     logOut();
     console.log("Cookie expired!");
   }
-  searchDB(userId, "getAll");
+  //searchDB(userId, "getAll");
 };
 
 /*
@@ -182,6 +182,12 @@ function addContact() {
     })
     .then((data) => {
       if (data.success) {
+        document
+          .getElementById("errorMessage")
+          .replaceChildren(
+            createAlert(`The contact has been added`, "warning")
+          );
+
         addContactToTable(fields[0], fields[1], fields[2], fields[3]);
         clearErrorMessage(); // Clear any previous error messages
         sendTo("/Contacts/Contacts.html");
