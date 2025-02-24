@@ -174,10 +174,15 @@ function addContact() {
     },
     body: JSON.stringify(dataObject),
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      return response.json();
+    })
     .then((data) => {
       if (data.success) {
-        addContactToTable(firstName, lastName, phoneNumber, email);
+        addContactToTable(fields[0], fields[1], fields[2], fields[3]);
         clearErrorMessage(); // Clear any previous error messages
         sendTo("/Contacts/Contacts.html");
       } else {
