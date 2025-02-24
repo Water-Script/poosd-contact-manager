@@ -37,7 +37,7 @@ window.onload = function () {
     logOut();
     console.log("Cookie expired!");
   }
-  //searchDB(userId, "getAll");
+  searchDB(userId, "getAll");
 };
 
 /*
