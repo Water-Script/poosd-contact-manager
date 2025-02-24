@@ -107,7 +107,7 @@ function startLogin() {
                 userId = reply.id;
                 userN = reply.username;
                 bakeCookies(); // possibly unneeded
-                sendTo("mainPage.html");
+                sendTo("Contacts/Contacts.html");
             } else if (xhr.status === 400) {
                 switch (reply.error) {
                     case "AccountNotFoundError":
