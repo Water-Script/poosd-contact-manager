@@ -4,6 +4,8 @@ let userN = "";
 
 window.onload = function () {
   const userId = getUserIdFromCookies();
+  document.getElementById("errorMessage").innerHTML =
+    "The user id is: " + userId;
   if (userId === null) {
     sendTo("/index.html");
   }
