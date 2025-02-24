@@ -1,9 +1,10 @@
 const apiUrl = "http://ingerberwetrust.com/LAMPAPI"; //api
+let userId = 0;
+let username = "";
 const exten = "php"; //extension for the api
-let userN = "";
 
 window.onload = function () {
-  const userId = getUserIdFromCookies();
+  getUserIdFromCookies();
   document.getElementById("errorMessage").innerHTML =
     "The user id is: " + userId;
   if (userId === null) {
@@ -14,14 +15,13 @@ window.onload = function () {
 
 function getUserIdFromCookies() {
   cookie = document.cookie;
-  //cookies are seperated by a | then an = 
-  let arrSplit = cookie.split("|");
-  //we know that split 0 is username and split 1 is userid
-  let tmp = arrSplit[0].trim();
-  const username = tmp[1];
-  tmp = arrSplit[1].trim();
-  return tmp[1];
-  } 
+  let arrSplit = cookie.split("|"); // Split the cookie by the '|' separator
+
+  let tmp = arrSplit[0].trim().split("="); // Split the username part by '='
+  username = tmp[1]; // "user1" (the username)
+
+  tmp = arrSplit[1].trim().split("="); // Split the userid part by '='
+  userId = tmp[1]; // "123" (the userID)
 }
 function searchDB(userId, type) {
   let search = [
@@ -148,4 +148,8 @@ function displayError(message) {
 function clearErrorMessage() {
   const errorDiv = document.getElementById("errorMessage");
   errorDiv.innerText = "";
+}
+
+function sendTo(site) {
+  window.location.href = site;
 }
