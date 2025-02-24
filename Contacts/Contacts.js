@@ -17,19 +17,15 @@ function createAlert(message, type) {
 
 window.onload = function () {
   const cookie = parseCookie(document.cookie);
-  //getUserIdFromCookies();
   document
     .getElementById("errorMessage")
     .replaceChildren(
       createAlert(`The user id is: ${cookie.userId}`, "warning")
     );
 
-  document.getElementById("errorMessage").innerHTML =
-    "The user id is: " + cookie.userId;
-
   userId = cookie.userId;
 
-  if (userId === null || Date.parse(cookie.expires) > Date.now()) {
+  if (userId == null || Date.parse(cookie.expires) > Date.now()) {
     sendTo("/index.html");
     document.cookie = "";
   }
@@ -40,8 +36,7 @@ window.onload = function () {
  * Parse the cookie and return an object consisting of they keys and their
  * stringified values.
  */
-function parseCookie() {
-  const cookie = document.cookie;
+function parseCookie(cookie) {
   const cookieTokens = cookie.split(";");
   let obj = {};
 
