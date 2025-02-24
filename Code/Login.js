@@ -104,7 +104,7 @@ function startLogin() {
             const reply = JSON.parse(xhr.responseText);
 
             if (xhr.readyState === 4 && xhr.status === 200) {
-                userId = reply.id;
+                userId = reply.userId;
                 userN = reply.username;
                 bakeCookies(); // possibly unneeded
                 sendTo("Contacts/Contacts.html");
