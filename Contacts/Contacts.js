@@ -18,10 +18,10 @@ function createAlert(message, type) {
 window.onload = function() {
   const cookie = parseCookie(document.cookie);
   //getUserIdFromCookies();
-  document.getElementById("errorMessage").innerHTML = createAlert(
+  document.getElementById("errorMessage").insertAdjacentHTML(createAlert(
     `The user id is: ${cookie.userId}`,
     "warning"
-  );
+  ));
 
   if (userId === null || Date.parse(cookie.expires) > Date.now()) {
     sendTo("/index.html");
@@ -53,7 +53,6 @@ function searchDB(userId, type) {
     document.getElementById("contactPhone").value,
     document.getElementById("contactEmail").value,
   ];
-  let searchObj = { userId: userId, type: type, search: search };
   let searchStr = "";
 
   if (type === "getAll") {
@@ -87,8 +86,10 @@ function addContact() {
   ];
 
   if (checkEmpty(fields)) {
-    document.getElementById("errorMessage").innerHTML =
-      "Please make sure all fields are filled out.";
+    document.getElementById("errorMessage").insertAdjacentHTML(
+      "Please make sure all fields are filled out.",
+      "warning"
+    );
     return 0;
   }
 
@@ -165,7 +166,7 @@ function addContactToTable(firstName, lastName, phoneNumber, email) {
 
 function displayError(message) {
   const errorDiv = document.getElementById("errorMessage");
-  errorDiv.innerHTML = createAlert(message, "warning");
+  errorDiv.insertAdjacentHTML(createAlert(message, "warning"));
 }
 
 function clearErrorMessage() {
