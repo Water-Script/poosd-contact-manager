@@ -177,8 +177,7 @@ function addContact() {
     .then((response) => response.json())
     .then((data) => {
       if (data.success) {
-        addContactToTable(userId, firstName, lastName, phoneNumber, email);
-        clearForm();
+        addContactToTable(firstName, lastName, phoneNumber, email);
         clearErrorMessage(); // Clear any previous error messages
         sendTo("/Contacts/Contacts.html");
       } else {
@@ -186,8 +185,9 @@ function addContact() {
       }
     })
     .catch((error) => {
-      console.error("Error:", error);
-      displayError("An error occurred while adding the contact.");
+      document
+        .getElementById("errorMessage")
+        .replaceChildren(createAlert(`An error occurred.`, "warning"));
     });
 }
 
@@ -221,7 +221,7 @@ function addContactToTable(firstName, lastName, phoneNumber, email) {
   const tableBody = document.querySelector("#table tbody");
   const newRow = document.createElement("tr");
   const firstNameCell = document.createElement("td");
-  nameCell.innerText = firstName;
+  firstNameCell.innerText = firstName;
   const lastNameCell = document.createElement("td");
   lastNameCell.innerText = lastName;
   const phoneNumberCell = document.createElement("td");
