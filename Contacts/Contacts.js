@@ -6,10 +6,10 @@ const exten = "php"; //extension for the api
 function createAlert(message, type) {
   const wrapperDiv = document.createElement("div");
   wrapperDiv.innerHTML = [
-  `<div class="alert alert-${type} alert-dismissible" role="alert">`,
-  `   <div>${message}</div>`,
-  `   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`,
-  `</div>`
+    `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+    `   <div>${message}</div>`,
+    `   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`,
+    `</div>`
   ].join("");
 
   return wrapperDiv;
@@ -86,10 +86,10 @@ function addContact() {
   ];
 
   if (checkEmpty(fields)) {
-    document.getElementById("errorMessage").insertAdjacentHTML(createAlert(
+    document.getElementById("errorMessage").innerHTML = createAlert(
       "Please make sure all fields are filled out.",
       "warning"
-    ));
+    );
     return 0;
   }
 
@@ -166,7 +166,7 @@ function addContactToTable(firstName, lastName, phoneNumber, email) {
 
 function displayError(message) {
   const errorDiv = document.getElementById("errorMessage");
-  errorDiv.insertAdjacentHTML(createAlert(message, "warning"));
+  errorDiv.innerHTML = createAlert(message, "warning");
 }
 
 function clearErrorMessage() {
