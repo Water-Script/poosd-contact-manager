@@ -1,15 +1,15 @@
 const apiUrl = "http://ingerberwetrust.com/LAMPAPI"; //api
 const exten = "php"; //extension for the api
-let userId = getUserIdFromCookies();
 let userN = "";
-/*
+
 window.onload = function () {
+  const userId = getUserIdFromCookies();
   if (userId === null) {
     sendTo("/index.html");
   }
-  searchDB(userId, "getAll");
+  //searchDB(userId, "getAll");
 };
-*/
+
 function getUserIdFromCookies() {
   // obtain cookies
   let cookies = document.cookie;
