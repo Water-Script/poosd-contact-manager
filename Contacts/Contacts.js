@@ -89,7 +89,7 @@ function addContact() {
     .then((response) => response.json())
     .then((data) => {
       if (data.success) {
-        addContactToTable(firstName, lastName, phoneNumber, email);
+        addContactToTable(userId, firstName, lastName, phoneNumber, email);
         clearForm();
         clearErrorMessage(); // Clear any previous error messages
       } else {
