@@ -25,8 +25,9 @@ window.onload = function () {
 
   userId = cookie.userId;
 
-  if (userId == null || cookie.expires > Date.now()) {
-    sendTo("/index.html");
+  if (!userId || cookie.expires > Date.now()) {
+    console.info(cookie);
+    // sendTo("/index.html");
     document.cookie = "";
   }
   //searchDB(userId, "getAll");
