@@ -44,7 +44,7 @@ function bakeCookies() {
     let date = new Date();
     date.setTime(date.getTime() + (30 * 60 * 1000));
     const usernameCookie = `username=${userN}; expires=${date.toUTCString()}; path=/`;
-    const userIdCookie = `userid=${userId}; expires=${date.toUTCString()}; path=/`;
+    const userIdCookie = `userId=${userId}; expires=${date.toUTCString()}; path=/`;
     document.cookie = usernameCookie;
     document.cookie = userIdCookie;
     console.log(usernameCookie, userIdCookie);
