@@ -25,7 +25,7 @@ window.onload = function () {
 
   userId = cookie.userId;
 
-  if (userId == null || Date.parse(cookie.expires) > Date.now()) {
+  if (userId == null || cookie.expires > Date.now()) {
     sendTo("/index.html");
     document.cookie = "";
   }
