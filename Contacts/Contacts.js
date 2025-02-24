@@ -24,7 +24,7 @@ window.onload = function () {
       createAlert(`The user id is: ${cookie.userId}`, "warning")
     );
 
-  UserId = cookie.userId;
+  userId = cookie.userId;
 
   if (userId === null || Date.parse(cookie.expires) > Date.now()) {
     sendTo("/index.html");
