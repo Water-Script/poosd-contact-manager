@@ -88,15 +88,15 @@ function searchDB(userId, type) {
     search: search,
   };
 
+  let searchStrLink = new URLSearchParams(searchStr).toString();
   if (type === "getAll") {
-    let ourLink = apiUrl + "/Search." + exten;
+    let ourLink = apiUrl + "/Search." + exten + "?" + searchStrLink;
 
     fetch(ourLink, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(searchStr),
     })
       .then((response) => {
         if (!response.ok) {
