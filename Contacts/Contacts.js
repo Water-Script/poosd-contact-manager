@@ -16,7 +16,7 @@ function createAlert(message, type) {
 }
 
 window.onload = function () {
-  const cookie = parseCookie(document.cookie);
+  const cookie = parseCookie();
   //getUserIdFromCookies();
   document
     .getElementById("errorMessage")
@@ -94,10 +94,11 @@ function addContact() {
   ];
 
   if (checkEmpty(fields)) {
-    document.getElementById("errorMessage").replaceChildren(createAlert(
-      "Please make sure all fields are filled out.",
-      "warning"
-    ));
+    document
+      .getElementById("errorMessage")
+      .replaceChildren(
+        createAlert("Please make sure all fields are filled out.", "warning")
+      );
     return 0;
   }
 
