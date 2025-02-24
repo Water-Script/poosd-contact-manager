@@ -89,10 +89,11 @@ function addContact() {
   ];
 
   if (checkEmpty(fields)) {
-    document.getElementById("errorMessage").replaceChildren(createAlert(
-      "Please make sure all fields are filled out.",
-      "warning"
-    ));
+    document
+      .getElementById("errorMessage")
+      .replaceChildren(
+        createAlert("Please make sure all fields are filled out.", "warning")
+      );
     return 0;
   }
 
