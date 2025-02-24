@@ -37,7 +37,10 @@ $stmt = $conn->prepare("INSERT INTO Contacts (UserID, FirstName, LastName, Phone
 $stmt->bind_param("issss", $userId, $firstName, $lastName, $phoneNumber, $email);
 
 if ($stmt->execute()) {
-    $result = $stmt->get_result();
+    $getContact = $conn->prepare("SELECT (ID, FirstName, LastName, PhoneNumber, Email) FROM Contacts WHERE UserID=? AND FirstName=? AND LastName=? AND PhoneNumber=? AND Email=?");
+    $getContact->bind_param($userId, $firstName, $lastName, $phoneNumber, $email);
+    $getContact->execute();
+    $result = $getContact->get_result();
     if ($row = $result->fetch_assoc()) {
         returnWithInfo($row["ID"], $row["FirstName"], $row["LastName"], $row["PhoneNumber"], $row["Email"]);
     }
