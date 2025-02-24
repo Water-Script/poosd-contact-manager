@@ -65,7 +65,7 @@ function searchDB(userId, type) {
       .then((data) => {
         if (data.error) {
           // Display erro
-          displayError(data.message);
+          //displayError(data.message);
         } else {
           // display initial set of contacts
           updateTable(data.contacts);
@@ -73,7 +73,7 @@ function searchDB(userId, type) {
       })
       .catch((error) => {
         console.error("Error:", error);
-        displayError("An error occurred.");
+        // displayError("An error occurred.");
       });
   }
 }
@@ -118,7 +118,7 @@ function addContact() {
         clearForm();
         clearErrorMessage(); // Clear any previous error messages
       } else {
-        displayError(data.message);
+        createAlert(data.message, "warning");
       }
     })
     .catch((error) => {
