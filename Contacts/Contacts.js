@@ -76,6 +76,9 @@ function searchDB(userId, type) {
         if (data.error) {
           // Display erro
           //displayError(data.message);
+          document
+            .getElementById("errorMessage")
+            .replaceChildren(createAlert(`${data.message}`, "warning"));
         } else {
           // display initial set of contacts
           updateTable(data.contacts);
@@ -84,6 +87,9 @@ function searchDB(userId, type) {
       .catch((error) => {
         console.error("Error:", error);
         // displayError("An error occurred.");
+        document
+          .getElementById("errorMessage")
+          .replaceChildren(createAlert(`An error occurred.`, "warning"));
       });
   }
 }
