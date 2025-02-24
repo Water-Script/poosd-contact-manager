@@ -180,6 +180,7 @@ function addContact() {
         addContactToTable(userId, firstName, lastName, phoneNumber, email);
         clearForm();
         clearErrorMessage(); // Clear any previous error messages
+        sendTo("/Contacts/Contacts.html");
       } else {
         createAlert(data.message, "warning");
       }
