@@ -102,7 +102,7 @@ function addContact() {
       );
     return 0;
   }
-  if (isPhoneNumber(fields[2] === false)) {
+  if (!isPhoneNumber(fields[2])) {
     document
       .getElementById("errorMessage")
       .replaceChildren(
