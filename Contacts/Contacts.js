@@ -24,14 +24,14 @@ window.onload = function () {
     );
 
   userId = cookie.userId;
-
+  /*
   if (userId == null || cookie.expires > Date.now()) {
     sendTo("/index.html");
     document.cookie = "";
   }
+  */
   //searchDB(userId, "getAll");
 };
-
 /*
  * Parse the cookie and return an object consisting of they keys and their
  * stringified values.
