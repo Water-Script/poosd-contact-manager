@@ -37,7 +37,7 @@ window.onload = function () {
     logOut();
     console.log("Cookie expired!");
   }
-  //searchDB(userId, "getAll");
+  searchDB(userId, "getAll");
 };
 
 /*
@@ -92,7 +92,7 @@ function searchDB(userId, type) {
     let ourLink = apiUrl + "/Search." + exten;
 
     fetch(ourLink, {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
