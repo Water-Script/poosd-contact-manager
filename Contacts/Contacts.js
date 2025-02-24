@@ -81,7 +81,6 @@ function searchDB(userId, type) {
 }
 
 function addContact() {
-  userId = cookie.userId;
   let fields = [
     document.getElementById("contactFirstName").value,
     document.getElementById("contactLastName").value,
