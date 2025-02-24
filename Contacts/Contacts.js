@@ -86,10 +86,10 @@ function addContact() {
   ];
 
   if (checkEmpty(fields)) {
-    document.getElementById("errorMessage").insertAdjacentHTML(
+    document.getElementById("errorMessage").insertAdjacentHTML(createAlert(
       "Please make sure all fields are filled out.",
       "warning"
-    );
+    ));
     return 0;
   }
 
