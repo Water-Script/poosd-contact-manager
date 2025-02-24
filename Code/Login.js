@@ -43,9 +43,11 @@ function checkEmpty(field) {
 function bakeCookies() {
     let date = new Date();
     date.setTime(date.getTime() + (30 * 60 * 1000));
-    const cookieString = `username=${userN}; userid=${userId}; expires=${date.toUTCString()}; path=/`;
-    document.cookie = cookieString;
-    console.log(cookieString);
+    const usernameCookie = `username=${userN}; expires=${date.toUTCString()}; path=/`;
+    const userIdCookie = `userid=${userId}; expires=${date.toUTCString()}; path=/`;
+    document.cookie = usernameCookie;
+    document.cookie = userIdCookie;
+    console.log(usernameCookie, userIdCookie);
 }
 
 /**

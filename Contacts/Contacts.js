@@ -26,9 +26,9 @@ window.onload = function () {
   console.log(cookie);
   userId = cookie.userId;
 
-  if (!userId || cookie.expires > Date.now()) {
+  if (!userId || !cookie.username) {
     // sendTo("/index.html");
-    document.cookie = "username=; userId=; expires=01 Jan 1970 00:00:00 UTC; path=/";
+    console.log("Cookie expired!");
   }
   //searchDB(userId, "getAll");
 };
