@@ -37,8 +37,8 @@ $stmt = $conn->prepare("INSERT INTO Contacts (UserID, FirstName, LastName, Phone
 $stmt->bind_param("issss", $userId, $firstName, $lastName, $phoneNumber, $email);
 
 if ($stmt->execute()) {
-    $getContact = $conn->prepare("SELECT (ID, FirstName, LastName, PhoneNumber, Email) FROM Contacts WHERE UserID=? AND FirstName=? AND LastName=? AND PhoneNumber=? AND Email=?");
-    $getContact->bind_param($userId, $firstName, $lastName, $phoneNumber, $email);
+    $getContact = $conn->prepare("SELECT ID, FirstName, LastName, PhoneNumber, Email FROM Contacts WHERE UserID=? AND FirstName=? AND LastName=? AND PhoneNumber=? AND Email=?");
+    $getContact->bind_param("issss", $userId, $firstName, $lastName, $phoneNumber, $email);
     $getContact->execute();
     $result = $getContact->get_result();
     if ($row = $result->fetch_assoc()) {
@@ -65,11 +65,11 @@ function returnWithError($err, $message, $code) {
 
 function returnWithInfo($id, $firstName, $lastName, $phoneNumber, $email) {
     $returnArray = array(
-        "contactId": $id,
-        "firstName": $firstName,
-        "lastName": $lastName,
-        "phoneNumber": $phoneNumber,
-        "email": $email
+        "contactId" => $id,
+        "firstName" => $firstName,
+        "lastName" => $lastName,
+        "phoneNumber" => $phoneNumber,
+        "email" => $email
     );
     header("Content-type: application/json; charset=utf-8");
     http_response_code(200);
