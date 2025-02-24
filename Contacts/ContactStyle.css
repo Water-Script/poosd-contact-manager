@@ -1,0 +1,100 @@
+body {
+  background-image: url("https://wallpapers.com/images/featured/4k-forest-7sfd6znw2ry6hnlt.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  font-family: "Montserrat", sans-serif;
+}
+.backblur {
+  background-color: #889482c8;
+  backdrop-filter: blur(15px);
+  border-radius: 25px;
+  padding: 40px;
+  margin: 20px;
+}
+.header {
+  text-align: center;
+  margin-top: 40px;
+  font-weight: 700;
+}
+.input {
+  height: 50px;
+  border-radius: 25px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  color: #333;
+  padding-left: 15px;
+  margin-bottom: 15px;
+}
+.input::placeholder {
+  text-align: center;
+  color: #999;
+}
+.btn-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0 10px;
+}
+.btn-circle svg {
+  width: 20px;
+  height: 20px;
+}
+.btn-primary {
+  background-color: #003d2d;
+  border-color: #061c16;
+}
+.btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+.btn-danger {
+  background-color: #003d2d;
+  border-color: #061c16;
+}
+
+.btn-warning {
+  background-color: #003d2d;
+  border-color: #061c16;
+}
+
+.table {
+  margin-top: 30px;
+  border: 1px solid #ddd;
+}
+.table th,
+.table td {
+  padding: 15px;
+  text-align: center;
+}
+.table th {
+  background-color: #333;
+  color: white;
+}
+.table-striped tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+.navbar {
+  margin-bottom: 40px;
+}
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-align: left;
+  width: 100%;
+}
+.navbar .navbar-nav {
+  width: 100%;
+  justify-content: space-between;
+}
+.error {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
