@@ -86,7 +86,7 @@ function addContact() {
   ];
 
   if (checkEmpty(fields)) {
-    document.getElementById("errorMessage").append(createAlert(
+    document.getElementById("errorMessage").replaceChildren(createAlert(
       "Please make sure all fields are filled out.",
       "warning"
     ));
@@ -166,7 +166,7 @@ function addContactToTable(firstName, lastName, phoneNumber, email) {
 
 function displayError(message) {
   const errorDiv = document.getElementById("errorMessage");
-  errorDiv.append(createAlert(message, "warning"));
+  errorDiv.replaceChildren(createAlert(message, "warning"));
 }
 
 function clearErrorMessage() {
