@@ -4,9 +4,10 @@ let username = "";
 const exten = "php"; //extension for the api
 
 window.onload = function () {
-  getUserIdFromCookies();
+  cookie = document.cookie;
+  //getUserIdFromCookies();
   document.getElementById("errorMessage").innerHTML =
-    "The user id is: " + userId;
+    "The user id is: " + cookie;
   if (userId === null) {
     sendTo("/index.html");
   }
