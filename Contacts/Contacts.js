@@ -15,6 +15,13 @@ function createAlert(message, type) {
   return wrapperDiv;
 }
 
+function logOut() {
+  document.cookie = "userId=; expires=01 Jan 1970 00:00:00 UTC; path=/";
+  document.cookie = "username=; expires=01 Jan 1970 00:00:00 UTC; path=/";
+
+  sendTo("/index.html");
+}
+
 window.onload = function () {
   const cookie = parseCookie(document.cookie);
   document
@@ -27,7 +34,7 @@ window.onload = function () {
   userId = cookie.userId;
 
   if (!userId || !cookie.username) {
-    // sendTo("/index.html");
+    logOut();
     console.log("Cookie expired!");
   }
   //searchDB(userId, "getAll");
