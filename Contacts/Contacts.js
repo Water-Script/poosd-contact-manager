@@ -23,12 +23,12 @@ window.onload = function () {
       createAlert(`The user id is: ${cookie.userId}`, "warning")
     );
 
+  console.log(cookie);
   userId = cookie.userId;
 
   if (!userId || cookie.expires > Date.now()) {
-    console.log(cookie);
     // sendTo("/index.html");
-    document.cookie = "";
+    document.cookie = "username=; userId=; expires=01 Jan 1970 00:00:00 UTC; path=/";
   }
   //searchDB(userId, "getAll");
 };
