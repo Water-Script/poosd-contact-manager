@@ -58,20 +58,53 @@ function parseCookie(cookie) {
 }
 
 function searchDB(userId, type) {
-  let search = [
-    document.getElementById("contactFirstName").value,
-    document.getElementById("contactLastName").value,
-    document.getElementById("contactPhone").value,
-    document.getElementById("contactEmail").value,
-  ];
-  let searchStr = "";
+  let search = "";
+  switch (type) {
+    case "getAll":
+      break;
+    case document.getElementById("contactFirstName").value:
+      type = "firstname";
+      search = document.getElementById("contactFirstName").value;
+      break;
+    case document.getElementById("contactLastName").value:
+      type = "lastname";
+      search = document.getElementById("contactLastName").value;
+      break;
+    case document.getElementById("contactPhoneNumber").value:
+      type = "phonenumber";
+      search = document.getElementById("contactPhoneNumber").value;
+      break;
+    case document.getElementById("contactEmail").value:
+      type = "email";
+      search = document.getElementById("contactEmail").value;
+      break;
+    default:
+      break;
+  }
+
+  let searchStr = {
+    userId: userId,
+    type: type,
+    search: search,
+  };
 
   if (type === "getAll") {
     searchStr = `UserID=${userId}`;
     let ourLink = apiUrl + "/Search." + exten;
 
-    fetch(ourLink)
-      .then((response) => response.json())
+    fetch(ourLink, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(searchStr),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response.json();
+      })
       .then((data) => {
         if (data.error) {
           // Display erro
@@ -93,6 +126,7 @@ function searchDB(userId, type) {
       });
   }
 }
+
 function isPhoneNumber(value) {
   // Check if the value is a string and contains exactly 10 digits
   const regex = /^\d{10}$/;
