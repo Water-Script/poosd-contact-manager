@@ -89,7 +89,6 @@ function searchDB(userId, type) {
   };
 
   if (type === "getAll") {
-    searchStr = `UserID=${userId}`;
     let ourLink = apiUrl + "/Search." + exten;
 
     fetch(ourLink, {
