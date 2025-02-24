@@ -20,7 +20,7 @@ window.onload = function () {
   //getUserIdFromCookies();
   document
     .getElementById("errorMessage")
-    .insertAdjacentHTML(
+    .replaceChildren(
       createAlert(`The user id is: ${cookie.userId}`, "warning")
     );
 
@@ -50,6 +50,8 @@ function parseCookie() {
 
     obj[key] = value;
   }
+
+  return obj;
 }
 
 function searchDB(userId, type) {
