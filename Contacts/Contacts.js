@@ -181,7 +181,9 @@ function addContact() {
       return response.json();
     })
     .then((data) => {
-      if (data.success) {
+      if (data.error) {
+        createAlert(data.message, "warning");
+      } else {
         document
           .getElementById("errorMessage")
           .replaceChildren(
@@ -191,8 +193,6 @@ function addContact() {
         addContactToTable(fields[0], fields[1], fields[2], fields[3]);
         clearErrorMessage(); // Clear any previous error messages
         sendTo("/Contacts/Contacts.html");
-      } else {
-        createAlert(data.message, "warning");
       }
     })
     .catch((error) => {
