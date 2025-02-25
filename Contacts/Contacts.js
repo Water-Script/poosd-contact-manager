@@ -314,7 +314,6 @@ function editToggle(button) {
   button.classList.add("btn-success");
 }
 
-/*
 function saveContact(button) {
   let setcontact = button.closest("tr");
 
@@ -332,7 +331,7 @@ function saveContact(button) {
       );
     return 0;
   }
-  if (!isPhoneNumber(phoneNumber) ){
+  if (!isPhoneNumber(phoneNumber)) {
     document
       .getElementById("errorMessage")
       .replaceChildren(
@@ -390,4 +389,3 @@ function saveContact(button) {
       createAlert(`An error occurred: ${error}`, "warning");
     });
 }
-*/
