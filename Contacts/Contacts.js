@@ -92,6 +92,9 @@ function searchDB(type) {
   let searchStrLink = new URLSearchParams(searchStr).toString();
 
   let ourLink = apiUrl + "/Search." + exten + "?" + searchStrLink;
+  document
+    .getElementById("errorMessage")
+    .replaceChildren(createAlert(ourLink, "warning"));
 
   fetch(ourLink, {
     method: "GET",
