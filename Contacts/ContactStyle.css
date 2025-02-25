@@ -111,3 +111,13 @@ body {
 .input-group .btn-primary {
   width: 5%;
 }
+
+td[contenteditable="true"] {
+  background-color: #4a7244;
+  transition: background-color 0.3s ease;
+}
+
+td[contenteditable="true"]:focus {
+  background-color: #264621;
+  transition: background-color 0.3s ease;
+}
