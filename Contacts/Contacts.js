@@ -425,6 +425,7 @@ function confirmDelete() {
     .catch((error) => {
       createAlert(`An error occurred: ${error}`, "warning");
     });
+  $("#deleteModal").modal("hide");
   searchDB("getAll");
 }
 
