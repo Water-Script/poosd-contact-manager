@@ -265,12 +265,13 @@ function sendTo(site) {
 
 function changeInputType() {
   let selectedValue = document.getElementById("inputTypeSelect").value;
+  let inputField = document.getElementById("dynamicInput");
 
   switch (selectedValue) {
     case "firstName":
       inputField.placeholder = "Search by First Name";
       break;
-    case "fastName":
+    case "lastName":
       inputField.placeholder = "Search by Last Name";
       break;
     case "email":
