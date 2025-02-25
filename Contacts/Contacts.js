@@ -211,6 +211,10 @@ function updateTable(contacts) {
             <td>${contact.LastName}</td>
             <td>${contact.PhoneNumber}</td>
             <td>${contact.Email}</td>
+            <td>
+                <button class="btn btn-warning mr-1" onclick="editContact()">Edit</button>
+                <button class="btn btn-danger" onclick="deleteContact()">Delete</button>
+            </td>
         `;
 
     tableBody.appendChild(row);
