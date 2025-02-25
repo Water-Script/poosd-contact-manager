@@ -301,6 +301,7 @@ function editToggle(button) {
   contact.cells[0].contentEditable = true;
   contact.cells[1].contentEditable = true;
   contact.cells[2].contentEditable = true;
+  contact.cells[2].setAttribute("oninput", "phoneStructure(this)");
   contact.cells[3].contentEditable = true;
 
   // Change the Edit button to a Save button (SVG icon)
