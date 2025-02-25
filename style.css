@@ -1,0 +1,36 @@
+body {
+    background-image: url("https://wallpapers.com/images/featured/4k-forest-7sfd6znw2ry6hnlt.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: "Montserrat", sans-serif;
+}
+
+.splash {
+    background-color: #889482c8;
+    backdrop-filter: blur(15px);
+    max-width: 50%;
+    min-width: max-content;
+    margin: auto;
+}
+
+#regDiv {
+    margin: auto;
+}
+
+.input {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid rgba(0, 0, 0, 0.2) !important;
+}
+
+.form-floating > label::after {
+    background-color: transparent !important;
+}
+
+.input:focus {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+button {
+    width: 100px;
+}

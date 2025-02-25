@@ -24,13 +24,13 @@ function logOut() {
 
 window.onload = function () {
   const cookie = parseCookie(document.cookie);
-  document
-    .getElementById("errorMessage")
-    .replaceChildren(
-      createAlert(`The user id is: ${cookie.userId}`, "warning")
-    );
+  // document
+  //   .getElementById("errorMessage")
+  //   .replaceChildren(
+  //     createAlert(`The user id is: ${cookie.userId}`, "warning")
+  //   );
 
-  console.log(cookie);
+  // console.log(cookie);
   userId = cookie.userId;
 
   if (!userId || !cookie.username) {
