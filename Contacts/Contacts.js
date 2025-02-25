@@ -67,13 +67,13 @@ function searchDB(type) {
     case "getAll":
       break;
     case "firstName":
-      search = document.getElementById("contactFirstName").value;
+      search = document.getElementById("dynamicInput").value;
       break;
     case "lastName":
-      search = document.getElementById("contactLastName").value;
+      search = document.getElementById("dynamicInput").value;
       break;
     case "email":
-      search = document.getElementById("contactEmail").value;
+      search = document.getElementById("dynamicInput").value;
       break;
     default:
       break;
