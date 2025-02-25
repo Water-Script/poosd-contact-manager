@@ -118,7 +118,7 @@ function searchDB(type) {
 function isPhoneNumber(value) {
   const digitsOnly = value.replace(/\D/g, "");
   const regex = /^\d{10}$/;
-  return regex.test(value);
+  return regex.test(digitsOnly);
 }
 
 function addContact() {
