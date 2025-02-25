@@ -184,14 +184,7 @@ function addContact() {
       if (data.error) {
         createAlert(data.message, "warning");
       } else {
-        document
-          .getElementById("errorMessage")
-          .replaceChildren(
-            createAlert(`The contact has been added`, "warning")
-          );
-
-        //addContactToTable(fields[0], fields[1], fields[2], fields[3]);
-        //clearErrorMessage(); // Clear any previous error messages
+        document;
         sendTo("/Contacts/Contacts.html");
       }
     })
