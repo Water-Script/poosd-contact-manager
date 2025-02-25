@@ -303,6 +303,9 @@ function editToggle(button) {
   contact.cells[2].contentEditable = true;
   contact.cells[3].contentEditable = true;
 
+  if checkEmpty(contact.cells) {
+
+
   // Change the Edit button to a Save button (SVG icon)
   button.innerHTML = `
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-square" viewBox="0 0 16 16">
@@ -313,7 +316,79 @@ function editToggle(button) {
   button.classList.remove("btn-warning");
   button.classList.add("btn-success");
 }
-
+}
 function saveContact(button) {
-  let contact = button.closest("tr");
+  let setcontact = button.closest("tr");
+
+  let firstName = setcontact.cells[0].innerText;
+  let lastName = setcontact.cells[1].innerText;
+  let phoneNumber = setcontact.cells[2].innerText;
+  let email = setcontact.cells[3].innerText;
+  let contactID = setcontact.cells[5].innerText;
+
+  if (checkEmpty(setcontact.cells)) {
+    document
+      .getElementById("errorMessage")
+      .replaceChildren(
+        createAlert("Please make sure all fields are filled out.", "warning")
+      );
+    return 0;
+  }
+  if (!isPhoneNumber(phoneNumber) ){
+    document
+      .getElementById("errorMessage")
+      .replaceChildren(
+        createAlert("A phone number must be 10 digits", "warning")
+      );
+    return 0;
+  }
+
+  setcontact.cells[0].contentEditable = false;
+  setcontact.cells[1].contentEditable = false;
+  setcontact.cells[2].contentEditable = false;
+  setcontact.cells[3].contentEditable = false;
+
+  button.innerHTML = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-pencil-square" viewBox="0 0 16 16">
+  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+</svg>`;
+  button.setAttribute("onclick", "editToggle(this)");
+  button.classList.remove("btn-success");
+  button.classList.add("btn-warning");
+
+  let dataObject = {
+    userId: userId,
+    contactId: contactID,
+    firstName: firstName,
+    lastName: lastName,
+    phoneNumber: phoneNumber,
+    email: email,
+  };
+
+  let ourLink = apiUrl + "/ContactEdit." + exten;
+
+  fetch(ourLink, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(dataObject),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data.error) {
+        createAlert(data.message, "warning");
+      } else {
+        sendTo("/Contacts/Contacts.html");
+      }
+    })
+    .catch((error) => {
+      createAlert(`An error occurred: ${error}`, "warning");
+    });
 }
