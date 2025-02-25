@@ -1,7 +1,7 @@
 const apiUrl = "http://ingerberwetrust.com/LAMPAPI"; //api
 let userId = 0;
 let username = "";
-let delcontactID = 0;
+let delcontactID;
 const exten = "php"; //extension for the api
 
 function createAlert(message, type) {
@@ -95,7 +95,15 @@ function searchDB(type) {
   })
     .then((response) => {
       if (!response.ok) {
-        throw Error(response.statusText);
+        if (response.status === 404) {
+          clearTable(); // Clear the table when 404 is received
+          document
+            .getElementById("errorMessage")
+            .replaceChildren(createAlert("No contacts found.", "warning"));
+        } else {
+          throw Error(response.statusText);
+        }
+        return;
       }
       return response.json();
     })
@@ -427,7 +435,7 @@ function confirmDelete() {
       createAlert(`An error occurred: ${error}`, "warning");
     });
 
-  sendTo("/Contacts/Contacts.html");
+  searchDB("getAll");
 }
 
 function phoneStructure(phone) {
