@@ -190,8 +190,8 @@ function addContact() {
             createAlert(`The contact has been added`, "warning")
           );
 
-        addContactToTable(fields[0], fields[1], fields[2], fields[3]);
-        clearErrorMessage(); // Clear any previous error messages
+        //addContactToTable(fields[0], fields[1], fields[2], fields[3]);
+        //clearErrorMessage(); // Clear any previous error messages
         sendTo("/Contacts/Contacts.html");
       }
     })
