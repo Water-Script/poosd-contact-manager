@@ -430,6 +430,7 @@ function confirmDelete() {
       if (data.error) {
         createAlert(data.message, "warning");
       } else {
+        searchDB("getAll");
       }
     })
     .catch((error) => {
