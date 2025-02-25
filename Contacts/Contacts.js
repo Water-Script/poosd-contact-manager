@@ -121,7 +121,9 @@ function searchDB(userId, type) {
         // displayError("An error occurred.");
         document
           .getElementById("errorMessage")
-          .replaceChildren(createAlert(`An error occurred.`, "warning"));
+          .replaceChildren(
+            createAlert(`An error occurred: ${error}`, "warning")
+          );
       });
   }
 }
@@ -191,7 +193,7 @@ function addContact() {
     .catch((error) => {
       document
         .getElementById("errorMessage")
-        .replaceChildren(createAlert(`An error occurred.`, "warning"));
+        .replaceChildren(createAlert(`An error occurred: ${error}`, "warning"));
     });
 }
 
