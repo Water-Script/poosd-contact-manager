@@ -393,12 +393,17 @@ function deleteContact(button) {
   let delcontact = button.closest("tr");
 
   let contactId = delcontact.cells[5].innerText;
-  createAlert(`An error occurred: ${contactId}`, "warning");
 
-  let dataObject = {
-    userId: userId,
-    contactId: contactId,
-  };
+  let deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+  deleteModal.show();
+
+  
+  document.getElementById('confirmDeleteButton').onclick = function() {
+    // Proceed with deletion after confirmation
+    let dataObject = {
+      userId: userId,
+      contactId: contactId,
+    };
 
   let ourLink = apiUrl + "/ContactDel." + exten;
 
@@ -424,6 +429,9 @@ function deleteContact(button) {
     .catch((error) => {
       createAlert(`An error occurred: ${error}`, "warning");
     });
+
+  deleteModal.hide();
+
   searchDB("getAll");
 }
 
