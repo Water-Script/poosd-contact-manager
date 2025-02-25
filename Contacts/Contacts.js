@@ -101,6 +101,7 @@ function searchDB(type) {
     })
     .then((data) => {
       if (data.error) {
+        updateTable(data.contacts);
         // Display erro
         //displayError(data.message);
         document
