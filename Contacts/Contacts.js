@@ -393,7 +393,6 @@ function saveContact(button) {
 function deleteContact(button) {
   let delcontact = button.closest("tr");
 
-  let userId = userId;
   let contactId = delcontact.cells[5].innerText;
 
   let dataObject = {
