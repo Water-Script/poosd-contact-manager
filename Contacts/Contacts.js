@@ -1,7 +1,7 @@
 const apiUrl = "http://ingerberwetrust.com/LAMPAPI"; //api
 let userId = 0;
 let username = "";
-let delcontact = 0;
+let delcontactID = 0;
 const exten = "php"; //extension for the api
 
 function createAlert(message, type) {
@@ -392,13 +392,13 @@ function saveContact(button) {
 
 function deleteContactStart(button) {
   let delcontact = button.closest("tr");
-  delcontact = delcontact.cells[5].innerText;
+  delcontactID = delcontact.cells[5].innerText;
 }
 
 function confirmDelete() {
   let dataObject = {
     userId: userId,
-    contactId: delcontact,
+    contactId: delcontactID,
   };
 
   let ourLink = apiUrl + "/ContactDel." + exten;
