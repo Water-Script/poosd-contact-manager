@@ -15,11 +15,11 @@ switch ($type) {
         $searchStr = "UserID=" . $userID;
         searchDB($conn, $searchStr);
         break;
-    case "firstname":
+    case "firstName":
         $searchStr = "UserID=" . $userID . " AND " . "FirstName LIKE '" . $search . "%'";
         searchDB($conn, $searchStr);
         break;
-    case "lastname":
+    case "lastName":
         $searchStr = "UserID=" . $userID . " AND " . "LastName LIKE '" . $search . "%'";
         searchDB($conn, $searchStr);
         break;
