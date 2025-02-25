@@ -429,14 +429,14 @@ function deleteContact(button) {
   searchDB("getAll");
 }
 
-function phoneStructure(input) {
-  let digit = input.value.replace(/\D/g, "");
+function phoneStructure(phone) {
+  let digit = phone.value.replace(/\D/g, "");
   if (digit.length <= 3) {
-    digit.value = "(" + value;
+    phone.value = "(" + value;
   } else if (value.length <= 6) {
-    digit.value = "(" + value.slice(0, 3) + ") " + value.slice(3);
+    phone.value = "(" + value.slice(0, 3) + ") " + value.slice(3);
   } else {
-    digit.value =
+    phone.value =
       "(" +
       value.slice(0, 3) +
       ") " +
