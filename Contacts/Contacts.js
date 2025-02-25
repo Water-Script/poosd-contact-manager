@@ -303,9 +303,6 @@ function editToggle(button) {
   contact.cells[2].contentEditable = true;
   contact.cells[3].contentEditable = true;
 
-  if checkEmpty(contact.cells) {
-
-
   // Change the Edit button to a Save button (SVG icon)
   button.innerHTML = `
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-square" viewBox="0 0 16 16">
@@ -316,7 +313,8 @@ function editToggle(button) {
   button.classList.remove("btn-warning");
   button.classList.add("btn-success");
 }
-}
+
+/*
 function saveContact(button) {
   let setcontact = button.closest("tr");
 
@@ -392,3 +390,4 @@ function saveContact(button) {
       createAlert(`An error occurred: ${error}`, "warning");
     });
 }
+*/
