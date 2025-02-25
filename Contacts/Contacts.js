@@ -58,9 +58,6 @@ function parseCookie(cookie) {
 }
 
 function searchDB(type) {
-  document
-    .getElementById("errorMessage")
-    .replaceChildren(createAlert(type, "warning"));
   let search = "";
 
   switch (type) {
@@ -79,10 +76,6 @@ function searchDB(type) {
       break;
   }
 
-  document
-    .getElementById("errorMessage")
-    .replaceChildren(createAlert(search, "warning"));
-
   let searchStr = {
     userId: userId,
     type: type,
@@ -92,9 +85,6 @@ function searchDB(type) {
   let searchStrLink = new URLSearchParams(searchStr).toString();
 
   let ourLink = apiUrl + "/Search." + exten + "?" + searchStrLink;
-  document
-    .getElementById("errorMessage")
-    .replaceChildren(createAlert(ourLink, "warning"));
 
   fetch(ourLink, {
     method: "GET",
