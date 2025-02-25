@@ -279,15 +279,15 @@ function changeInputType() {
   switch (selectedValue) {
     case "FirstName":
       inputField.type = "firstname";
-      inputField.placeholder = "Enter First Name";
+      inputField.placeholder = "Search by First Name";
       break;
     case "LastName":
       inputField.type = "lastname";
-      inputField.placeholder = "Enter Last Name";
+      inputField.placeholder = "Search by Last Name";
       break;
     case "Email":
       inputField.type = "email";
-      inputField.placeholder = "Enter Email";
+      inputField.placeholder = "Search by Email";
       break;
     default:
       break;
