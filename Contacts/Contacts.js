@@ -186,14 +186,11 @@ function addContact() {
       if (data.error) {
         createAlert(data.message, "warning");
       } else {
-        document;
         sendTo("/Contacts/Contacts.html");
       }
     })
     .catch((error) => {
-      document
-        .getElementById("errorMessage")
-        .replaceChildren(createAlert(`An error occurred: ${error}`, "warning"));
+      createAlert(`An error occurred: ${error}`, "warning");
     });
 }
 
