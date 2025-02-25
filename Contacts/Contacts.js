@@ -303,7 +303,7 @@ function editToggle(button) {
   contact.cells[2].contentEditable = true;
   contact.cells[3].contentEditable = true;
 
-  let phone = contact.cells[2];
+  let phone = contact.cells[2].innertext;
   phone.addEventListener("input", function () {
     formatPhoneNumber(phone);
   });
