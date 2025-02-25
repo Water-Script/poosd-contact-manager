@@ -214,6 +214,9 @@ function updateTable(contacts) {
 </svg>
                 </button>
             </td>
+            <td style="display: none;" class="contactid">${contact.ID}</td>
+            </td>
+
         `;
 
     tableBody.appendChild(row);
