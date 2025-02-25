@@ -117,13 +117,7 @@ function searchDB(userId, type) {
         }
       })
       .catch((error) => {
-        console.error("Error:", error);
-        // displayError("An error occurred.");
-        document
-          .getElementById("errorMessage")
-          .replaceChildren(
-            createAlert(`An error occurred: ${error}`, "warning")
-          );
+        createAlert(`An error occurred: ${error}`, "warning");
       });
   }
 }
