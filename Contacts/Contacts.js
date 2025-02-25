@@ -59,6 +59,7 @@ function parseCookie(cookie) {
 }
 
 function searchDB(type) {
+  clearErrorMessage();
   let search = "";
 
   switch (type) {
