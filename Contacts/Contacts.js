@@ -456,8 +456,6 @@ function phoneStructure(phone) {
 }
 
 function clearTable() {
-  const clearBody = document.getElementById("#contactTable tbody");
-  if (clearBody) {
-    clearBody.innerHTML = "";
-  }
+  const tableBody2 = document.querySelector("#contactTable tbody");
+  tableBody2.innerHTML = "";
 }
