@@ -58,6 +58,9 @@ function parseCookie(cookie) {
 }
 
 function searchDB(type) {
+  document
+    .getElementById("errorMessage")
+    .replaceChildren(createAlert(type, "warning"));
   let search = "";
 
   switch (type) {
@@ -83,37 +86,36 @@ function searchDB(type) {
   };
 
   let searchStrLink = new URLSearchParams(searchStr).toString();
-  if (type === "getAll") {
-    let ourLink = apiUrl + "/Search." + exten + "?" + searchStrLink;
 
-    fetch(ourLink, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
+  let ourLink = apiUrl + "/Search." + exten + "?" + searchStrLink;
+
+  fetch(ourLink, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      return response.json();
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (data.error) {
-          // Display erro
-          //displayError(data.message);
-          document
-            .getElementById("errorMessage")
-            .replaceChildren(createAlert(`${data.message}`, "warning"));
-        } else {
-          // display initial set of contacts
-          updateTable(data.contacts);
-        }
-      })
-      .catch((error) => {
-        createAlert(`An error occurred: ${error}`, "warning");
-      });
-  }
+    .then((data) => {
+      if (data.error) {
+        // Display erro
+        //displayError(data.message);
+        document
+          .getElementById("errorMessage")
+          .replaceChildren(createAlert(`${data.message}`, "warning"));
+      } else {
+        // display initial set of contacts
+        updateTable(data.contacts);
+      }
+    })
+    .catch((error) => {
+      createAlert(`An error occurred: ${error}`, "warning");
+    });
 }
 
 function isPhoneNumber(value) {
@@ -265,10 +267,6 @@ function changeInputType() {
   let selectedValue = document.getElementById("inputTypeSelect").value;
 
   let inputField = document.getElementById("dynamicInput");
-
-  document
-    .getElementById("errorMessage")
-    .replaceChildren(createAlert(selectedValue, "warning"));
 
   switch (selectedValue) {
     case "FirstName":
