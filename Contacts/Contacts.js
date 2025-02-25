@@ -382,7 +382,7 @@ function saveContact(button) {
       if (data.error) {
         createAlert(data.message, "warning");
       } else {
-        sendTo("/Contacts/Contacts.html");
+        searchDB("getAll");
       }
     })
     .catch((error) => {
