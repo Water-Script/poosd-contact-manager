@@ -79,6 +79,10 @@ function searchDB(type) {
       break;
   }
 
+  document
+    .getElementById("errorMessage")
+    .replaceChildren(createAlert(search, "warning"));
+
   let searchStr = {
     userId: userId,
     type: type,
