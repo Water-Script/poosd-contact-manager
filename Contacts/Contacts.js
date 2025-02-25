@@ -266,3 +266,30 @@ function clearErrorMessage() {
 function sendTo(site) {
   window.location.href = site;
 }
+
+function changeInputType() {
+  let selectedValue = document.getElementById("inputTypeSelect").value;
+
+  let inputField = document.getElementById("dynamicInput");
+
+  document
+    .getElementById("errorMessage")
+    .replaceChildren(createAlert(selectedValue, "warning"));
+
+  switch (selectedValue) {
+    case "FirstName":
+      inputField.type = "firstname";
+      inputField.placeholder = "Search by First Name";
+      break;
+    case "LastName":
+      inputField.type = "lastname";
+      inputField.placeholder = "Search by Last Name";
+      break;
+    case "Email":
+      inputField.type = "email";
+      inputField.placeholder = "Search by Email";
+      break;
+    default:
+      break;
+  }
+}
