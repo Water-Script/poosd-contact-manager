@@ -270,7 +270,11 @@ function sendTo(site) {
 function changeInputType() {
   let selectedValue = document.getElementById("inputTypeSelect").value;
 
-  let inputField = document.getElementById("inputField");
+  let inputField = document.getElementById("dynamicInput");
+
+  document
+    .getElementById("errorMessage")
+    .replaceChildren(createAlert(selectedValue, "warning"));
 
   switch (selectedValue) {
     case "FirstName":
