@@ -394,6 +394,7 @@ function deleteContact(button) {
   let delcontact = button.closest("tr");
 
   let contactId = delcontact.cells[5].innerText;
+  createAlert(`An error occurred: ${contactId}`, "warning");
 
   let dataObject = {
     userId: userId,
