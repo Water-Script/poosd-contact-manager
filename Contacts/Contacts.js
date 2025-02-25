@@ -266,3 +266,26 @@ function clearErrorMessage() {
 function sendTo(site) {
   window.location.href = site;
 }
+
+function changeInputType() {
+  var selectedValue = document.getElementById("inputTypeSelect").value;
+
+  var inputField = document.getElementById("inputField");
+
+  switch (selectedValue) {
+    case "FirstName":
+      inputField.type = "firstname";
+      inputField.placeholder = "Enter First Name";
+      break;
+    case "LastName":
+      inputField.type = "lastname";
+      inputField.placeholder = "Enter Last Name";
+      break;
+    case "Email":
+      inputField.type = "email";
+      inputField.placeholder = "Enter Email";
+      break;
+    default:
+      break;
+  }
+}
