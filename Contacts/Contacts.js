@@ -428,3 +428,20 @@ function deleteContact(button) {
     });
   searchDB("getAll");
 }
+
+function phoneStructure(input) {
+  let digit = input.value.replace(/\D/g, "");
+  if (digit.length <= 3) {
+    digit.value = "(" + value;
+  } else if (value.length <= 6) {
+    digit.value = "(" + value.slice(0, 3) + ") " + value.slice(3);
+  } else {
+    digit.value =
+      "(" +
+      value.slice(0, 3) +
+      ") " +
+      value.slice(3, 6) +
+      "-" +
+      value.slice(6, 10);
+  }
+}
