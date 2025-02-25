@@ -419,7 +419,6 @@ function deleteContact(button) {
       if (data.error) {
         createAlert(data.message, "warning");
       } else {
-        sendTo("/Contacts/Contacts.html");
       }
     })
     .catch((error) => {
