@@ -426,4 +426,5 @@ function deleteContact(button) {
     .catch((error) => {
       createAlert(`An error occurred: ${error}`, "warning");
     });
+  searchDB("getAll");
 }
