@@ -432,16 +432,16 @@ function deleteContact(button) {
 function phoneStructure(phone) {
   let digit = phone.value.replace(/\D/g, "");
   if (digit.length <= 3) {
-    phone.value = "(" + value;
-  } else if (value.length <= 6) {
-    phone.value = "(" + value.slice(0, 3) + ") " + value.slice(3);
+    phone.value = "(" + digit;
+  } else if (digit.length <= 6) {
+    phone.value = "(" + digit.slice(0, 3) + ") " + digit.slice(3);
   } else {
     phone.value =
       "(" +
-      value.slice(0, 3) +
+      digit.slice(0, 3) +
       ") " +
-      value.slice(3, 6) +
+      digit.slice(3, 6) +
       "-" +
-      value.slice(6, 10);
+      digit.slice(6, 10);
   }
 }
