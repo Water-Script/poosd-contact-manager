@@ -404,7 +404,7 @@ function deleteContact(button) {
   let ourLink = apiUrl + "/ContactDel." + exten;
 
   fetch(ourLink, {
-    method: "POST",
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json",
     },
