@@ -57,7 +57,7 @@ function parseCookie(cookie) {
   return obj;
 }
 
-function searchDB(userId, type) {
+function searchDB(type) {
   let search = "";
   switch (type) {
     case "getAll":
