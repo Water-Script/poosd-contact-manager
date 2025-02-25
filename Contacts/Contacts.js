@@ -426,7 +426,7 @@ function confirmDelete() {
       createAlert(`An error occurred: ${error}`, "warning");
     });
 
-  searchDB("getAll");
+  sendTo("/Contacts/Contacts.html");
 }
 
 function phoneStructure(phone) {
