@@ -116,7 +116,7 @@ function searchDB(type) {
 }
 
 function isPhoneNumber(value) {
-  // Check if the value is a string and contains exactly 10 digits
+  const digitsOnly = value.replace(/\D/g, "");
   const regex = /^\d{10}$/;
   return regex.test(value);
 }
