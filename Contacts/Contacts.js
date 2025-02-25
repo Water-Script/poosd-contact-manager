@@ -454,3 +454,10 @@ function phoneStructure(phone) {
       digit.slice(6, 10);
   }
 }
+
+function clearTable() {
+  const tableBody = document.getElementById("tableBody");
+  if (tableBody) {
+    tableBody.innerHTML = "";
+  }
+}
