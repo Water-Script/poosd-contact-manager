@@ -268,9 +268,9 @@ function sendTo(site) {
 }
 
 function changeInputType() {
-  var selectedValue = document.getElementById("inputTypeSelect").value;
+  let selectedValue = document.getElementById("inputTypeSelect").value;
 
-  var inputField = document.getElementById("inputField");
+  let inputField = document.getElementById("inputField");
 
   switch (selectedValue) {
     case "FirstName":
