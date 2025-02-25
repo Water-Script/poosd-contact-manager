@@ -267,13 +267,13 @@ function changeInputType() {
   let selectedValue = document.getElementById("inputTypeSelect").value;
 
   switch (selectedValue) {
-    case "FirstName":
+    case "firstName":
       inputField.placeholder = "Search by First Name";
       break;
-    case "LastName":
+    case "fastName":
       inputField.placeholder = "Search by Last Name";
       break;
-    case "Email":
+    case "email":
       inputField.placeholder = "Search by Email";
       break;
     default:
