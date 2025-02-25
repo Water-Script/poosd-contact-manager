@@ -427,7 +427,6 @@ function confirmDelete() {
     });
 
   searchDB("getAll");
-  $("#deleteModal").modal("hide");
 }
 
 function phoneStructure(phone) {
