@@ -389,3 +389,41 @@ function saveContact(button) {
       createAlert(`An error occurred: ${error}`, "warning");
     });
 }
+
+function deleteContact(button) {
+  let delcontact = button.closest("tr");
+
+  let userId = userId;
+  let contactId = delcontact.cells[5].innerText;
+
+  let dataObject = {
+    userId: userId,
+    contactId: contactId,
+  };
+
+  let ourLink = apiUrl + "/ContactDel." + exten;
+
+  fetch(ourLink, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(dataObject),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw Error(response.statusText);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data.error) {
+        createAlert(data.message, "warning");
+      } else {
+        sendTo("/Contacts/Contacts.html");
+      }
+    })
+    .catch((error) => {
+      createAlert(`An error occurred: ${error}`, "warning");
+    });
+}
