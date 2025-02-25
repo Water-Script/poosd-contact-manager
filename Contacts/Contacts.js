@@ -59,23 +59,17 @@ function parseCookie(cookie) {
 
 function searchDB(type) {
   let search = "";
+
   switch (type) {
     case "getAll":
       break;
-    case document.getElementById("contactFirstName").value:
-      type = "firstname";
+    case "firstName":
       search = document.getElementById("contactFirstName").value;
       break;
-    case document.getElementById("contactLastName").value:
-      type = "lastname";
+    case "lastName":
       search = document.getElementById("contactLastName").value;
       break;
-    case document.getElementById("contactPhoneNumber").value:
-      type = "phonenumber";
-      search = document.getElementById("contactPhoneNumber").value;
-      break;
-    case document.getElementById("contactEmail").value:
-      type = "email";
+    case "email":
       search = document.getElementById("contactEmail").value;
       break;
     default:
