@@ -423,20 +423,21 @@ function confirmDelete() {
     .then((response) => {
       if (!response.ok) {
         throw Error(response.statusText);
+      } else {
+        window.location.reload(true);
       }
-      return response.json();
     })
     .then((data) => {
       if (data.error) {
         createAlert(data.message, "warning");
       } else {
-        searchDB("getAll");
+        window.location.reload(true);
       }
     })
     .catch((error) => {
       createAlert(`An error occurred: ${error}`, "warning");
     });
-  location.reload(true);
+  window.location.reload(true);
 }
 
 function phoneStructure(phone) {
