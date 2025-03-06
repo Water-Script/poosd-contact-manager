@@ -437,7 +437,7 @@ function confirmDelete() {
     .catch((error) => {
       createAlert(`An error occurred: ${error}`, "warning");
     });
-  window.location.reload(true);
+  //window.location.reload(true);
 }
 
 function phoneStructure(phone) {
